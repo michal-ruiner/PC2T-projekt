@@ -1,3 +1,4 @@
+import java.util.List;
 
 public abstract class Osoba {
 	private String jmeno;
@@ -36,5 +37,5 @@ public abstract class Osoba {
 	}
 	//*******************************************************
 
-	protected abstract void vypisOsob();
+	protected abstract List vypisOsob();
 }

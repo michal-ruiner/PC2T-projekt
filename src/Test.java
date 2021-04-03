@@ -46,7 +46,7 @@ public class Test {
 		int volba;
 		Databaze databazeOsob=new Databaze();
 		while(run) {
-			System.out.println("****Zvolte prosim moznost****");
+			System.out.println("\n****Zvolte prosim moznost****");
 			System.out.println("1) Pridani nove osoby \n"
 							 + "2)\n"
 							 + "3)\n"
@@ -65,7 +65,7 @@ public class Test {
 							 + "16) Ukonceni aplikace\n"
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"
-							 + "18) Vypis ID");
+							 + "18) Vypis ID\n");
 			volba=pouzeCelaCisla(sc);
 			switch(volba) {
 				case 1:
@@ -87,7 +87,6 @@ public class Test {
 					String prijmeni = korektniJmeno(sc);
 					int rok = korektniRok(sc);
 					if(role == 1) {
-						// Prideleni vyucujicich studentovi
 						List<Integer> listUcitelu = new ArrayList<Integer>();
 						System.out.println("Kolika ucitelum bude student prirazen: ");
 						int pocetUcitelu = pouzeCelaCisla(sc);
@@ -97,8 +96,12 @@ public class Test {
 							while(!databazeOsob.dbObsahujeUcitele(id)) {
 								System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
 								id=pouzeCelaCisla(sc);
-							}		
-							listUcitelu.add(id);	
+							}	
+							if(listUcitelu.contains(id)) {
+								System.out.println("Ucitel s timto ID je jiz prirazen.");
+								i--;
+							} else
+								listUcitelu.add(id);	
 						}
 						databazeOsob.setStudent(jmeno, prijmeni, rok, listUcitelu);
 					} else
@@ -107,6 +110,10 @@ public class Test {
 				case 4:
 					System.out.println("Zadejte ID studenta: ");
 					int id = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeStudenta(id)) {
+						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+						id=pouzeCelaCisla(sc);
+					}
 					databazeOsob.getUcitele(id);
 					break;
 				case 16:

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,10 +25,20 @@ public class Databaze {
 			return false;
 	}
 	
+	public boolean dbObsahujeStudenta(int id) {
+		if (databaze.containsKey(id) && databaze.get(id) instanceof Student) {
+			return true;
+		} else
+			return false;
+	}
+	
 	public void getUcitele(int id) {
-		if(databaze.containsKey(id))
-			databaze.get(id).vypisOsob();
-		else {
+		List<Integer> temp = new ArrayList<Integer>();
+		if(databaze.containsKey(id)) {
+			temp.addAll(databaze.get(id).vypisOsob());
+			for(Integer i: temp)
+				System.out.println("ID: "+i+", prijmeni: "+databaze.get(i).getPrijmeni());
+		}else {
 			System.out.println("Student s timto ID neexistuje.");
 		}
 	}
@@ -36,8 +47,7 @@ public class Databaze {
 	public void vypisDatabaze(){
 		if(databaze.size() > 0) {
 			for (Integer i : databaze.keySet())
-					System.out.println("ID: "+i+", Jmeno: "+databaze.get(i).getJmeno()+", Prijmeni: "+databaze.get(i).getPrijmeni()+", Rok: "+databaze.get(i).getRok());
-			
+				System.out.println("ID: "+i+", Jmeno: "+databaze.get(i).getJmeno()+", Prijmeni: "+databaze.get(i).getPrijmeni()+", Rok: "+databaze.get(i).getRok());		
 			System.out.println("");
 		} else {
 			System.out.println("Zadny student zatim nebyl zadan.\n");

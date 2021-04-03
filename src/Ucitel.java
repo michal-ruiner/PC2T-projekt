@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class Ucitel extends Osoba{
 	public Ucitel(String jmeno, String prijmeni, int rok) {
@@ -6,7 +7,8 @@ public class Ucitel extends Osoba{
 	}
 
 	@Override
-	protected void vypisOsob() {
+	protected List vypisOsob() {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}

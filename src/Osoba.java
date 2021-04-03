@@ -35,4 +35,6 @@ public abstract class Osoba {
 		this.rok = rok;
 	}
 	//*******************************************************
+
+	protected abstract void vypisOsob();
 }

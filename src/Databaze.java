@@ -14,7 +14,7 @@ public class Databaze {
 		databaze.put(index++, new Ucitel(jmeno,prijmeni,rok));
 	}
 	
-	public void setStudent(String jmeno, String prijmeni, int rok, List prirazeniUcitelu) {
+	public void setStudent(String jmeno, String prijmeni, int rok, List<Integer> prirazeniUcitelu) {
 		databaze.put(index++, new Student(jmeno,prijmeni,rok, prirazeniUcitelu));
 	}
 	
@@ -38,6 +38,25 @@ public class Databaze {
 			temp.addAll(databaze.get(id).vypisOsob());
 			for(Integer i: temp)
 				System.out.println("ID: "+i+", prijmeni: "+databaze.get(i).getPrijmeni());
+		}else {
+			System.out.println("Student s timto ID neexistuje.");
+		}
+	}
+	
+	// Zadani znamek studentovi
+	public void zadaniZnamek(int id, int znamka) {
+		if(databaze.containsKey(id)) {
+			((Student)databaze.get(id)).setZnamky(znamka);
+			System.out.println("Zapis znamku uspesne proveden.");
+		}else {
+			System.out.println("Student s timto ID neexistuje.");
+		}
+	}
+	
+	// Ziskani znamek studenta
+	public void ziskaniZnamek(int id) {
+		if(databaze.containsKey(id)) {
+			((Student)databaze.get(id)).getZnamky();
 		}else {
 			System.out.println("Student s timto ID neexistuje.");
 		}

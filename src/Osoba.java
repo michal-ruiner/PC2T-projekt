@@ -37,5 +37,5 @@ public abstract class Osoba {
 	}
 	//*******************************************************
 
-	protected abstract List vypisOsob();
+	protected abstract List<Integer> vypisOsob();
 }

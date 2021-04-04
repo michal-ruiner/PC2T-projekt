@@ -7,7 +7,7 @@ public class Ucitel extends Osoba{
 	}
 
 	@Override
-	protected List vypisOsob() {
+	protected List<Integer> vypisOsob() {
 		return null;
 		// TODO Auto-generated method stub
 		

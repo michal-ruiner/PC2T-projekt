@@ -44,11 +44,12 @@ public class Test {
 		Scanner sc = new Scanner(System.in);
 		boolean run = true;
 		int volba;
+		int id = 0;
 		Databaze databazeOsob=new Databaze();
 		while(run) {
 			System.out.println("\n****Zvolte prosim moznost****");
 			System.out.println("1) Pridani nove osoby \n"
-							 + "2)\n"
+							 + "2) Zadat studentovi znamku\n"
 							 + "3)\n"
 							 + "4) Vypis vsech ucitelu studenta\n"
 							 + "5)\n"
@@ -65,7 +66,8 @@ public class Test {
 							 + "16) Ukonceni aplikace\n"
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"
-							 + "18) Vypis ID\n");
+							 + "18) Vypis ID\n"
+							 + "19) testing purpose");
 			volba=pouzeCelaCisla(sc);
 			switch(volba) {
 				case 1:
@@ -92,7 +94,7 @@ public class Test {
 						int pocetUcitelu = pouzeCelaCisla(sc);
 						for(int i = 0; i < pocetUcitelu; i++) {
 							System.out.println("Zadejte ID ucitele: ");
-							int id = pouzeCelaCisla(sc);
+							id = pouzeCelaCisla(sc);
 							while(!databazeOsob.dbObsahujeUcitele(id)) {
 								System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
 								id=pouzeCelaCisla(sc);
@@ -107,9 +109,24 @@ public class Test {
 					} else
 						databazeOsob.setUcitel(jmeno, prijmeni, rok);
 					break;
+				case 2:
+					System.out.println("Zadejte ID studenta: ");
+					id = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeStudenta(id)) {
+						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+						id=pouzeCelaCisla(sc);
+					}
+					System.out.println("Zadejte znamku studenta: ");
+					int znamka=pouzeCelaCisla(sc);
+					while(znamka < 0 || znamka >5) {
+						System.out.println("Zadejte znamku z rozsahu 1-5: ");
+						znamka=pouzeCelaCisla(sc);
+					}
+					databazeOsob.zadaniZnamek(id, znamka);
+					break;
 				case 4:
 					System.out.println("Zadejte ID studenta: ");
-					int id = pouzeCelaCisla(sc);
+					id = pouzeCelaCisla(sc);
 					while(!databazeOsob.dbObsahujeStudenta(id)) {
 						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
 						id=pouzeCelaCisla(sc);
@@ -124,6 +141,15 @@ public class Test {
 					break;
 				case 18:
 					databazeOsob.vypisID();
+					break;
+				case 19:
+					System.out.println("Zadejte ID studenta: ");
+					id = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeStudenta(id)) {
+						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+						id=pouzeCelaCisla(sc);
+					}
+					databazeOsob.ziskaniZnamek(id);
 					break;
 			}
 		}

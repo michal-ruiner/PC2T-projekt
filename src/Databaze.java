@@ -18,6 +18,13 @@ public class Databaze {
 		databaze.put(index++, new Student(jmeno,prijmeni,rok, prirazeniUcitelu));
 	}
 	
+	public boolean dbObsahujeUzivatele(int id) {
+		if (databaze.containsKey(id)) {
+			return true;
+		} else
+			return false;
+	}
+	
 	public boolean dbObsahujeUcitele(int id) {
 		if (databaze.containsKey(id) && databaze.get(id) instanceof Ucitel) {
 			return true;
@@ -45,7 +52,7 @@ public class Databaze {
 	
 	// Zadani znamek studentovi
 	public void zadaniZnamek(int id, int znamka) {
-		if(databaze.containsKey(id)) {
+		if(databaze.containsKey(id) && databaze.get(id) instanceof Student) {
 			((Student)databaze.get(id)).setZnamky(znamka);
 			System.out.println("Zapis znamku uspesne proveden.");
 		}else {
@@ -55,11 +62,21 @@ public class Databaze {
 	
 	// Ziskani znamek studenta
 	public void ziskaniZnamek(int id) {
-		if(databaze.containsKey(id)) {
+		if(databaze.containsKey(id) && databaze.get(id) instanceof Student) {
 			((Student)databaze.get(id)).getZnamky();
 		}else {
 			System.out.println("Student s timto ID neexistuje.");
 		}
+	}
+	
+	public boolean smazaniOsoby(int id) {
+		if(databaze.containsKey(id)){
+			System.out.println("Uzivatel "+databaze.get(id).getPrijmeni()+" s ID "+id+" byl uspesne smazan.");
+			databaze.remove(id);
+			return true;
+		} else
+			System.out.println("Uzivatel s ID "+id+" nebyl v databazi nalezen.");
+			return false;
 	}
 	
 	//************************************************ Vypis databaze pro testovaci ucely

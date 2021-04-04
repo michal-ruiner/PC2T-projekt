@@ -50,7 +50,7 @@ public class Test {
 			System.out.println("\n****Zvolte prosim moznost****");
 			System.out.println("1) Pridani nove osoby \n"
 							 + "2) Zadat studentovi znamku\n"
-							 + "3)\n"
+							 + "3) Smazani osoby z databaze\n"
 							 + "4) Vypis vsech ucitelu studenta\n"
 							 + "5)\n"
 							 + "6)\n"
@@ -123,6 +123,15 @@ public class Test {
 						znamka=pouzeCelaCisla(sc);
 					}
 					databazeOsob.zadaniZnamek(id, znamka);
+					break;
+				case 3:
+					System.out.println("Zadejte ID uzivatele: ");
+					id = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeUzivatele(id)) {
+						System.out.println("Uzivatel s timto ID neexistuje, zadejte prosim nove id: ");
+						id=pouzeCelaCisla(sc);
+					}
+					databazeOsob.smazaniOsoby(id);
 					break;
 				case 4:
 					System.out.println("Zadejte ID studenta: ");

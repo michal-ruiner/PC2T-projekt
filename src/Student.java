@@ -19,6 +19,10 @@ public class Student extends Osoba {
 	public List<Integer> vypisOsob() {
 		return ucitele;
 	}
+	
+	public void setUcitele(int id){
+		ucitele.add(id);
+	}
 
 	public void getZnamky() {
 		System.out.println("Znamky studenta: "+znamky);

@@ -90,6 +90,10 @@ public class Databaze {
 		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
 			((Ucitel)databaze.get(iduc)).setStudenti(idst);
 			System.out.println("Zapis studenta uspesne proveden.");
+			if(!((Student)databaze.get(idst)).vypisOsob().contains(iduc))
+				((Student)databaze.get(idst)).setUcitele(iduc);
+			else
+				System.out.println("Ucitel jiz existuje v seznamu studenta.");
 		}else {
 			System.out.println("Problem s ID ucitele nebo studenta.");
 		}
@@ -99,6 +103,10 @@ public class Databaze {
 		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
 			((Ucitel)databaze.get(iduc)).smazaniOsobZListu(idst);
 			System.out.println("Smazani studenta uspesne provedeno.");
+			if(((Student)databaze.get(idst)).vypisOsob().contains(iduc))
+				((Student)databaze.get(idst)).smazaniOsobZListu(iduc);
+			else
+				System.out.println("Ucitel se nenachazel v seznamu studenta.");
 		} else {
 			System.out.println("Problem s ID ucitele nebo studenta.");
 		}

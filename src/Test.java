@@ -52,7 +52,7 @@ public class Test {
 							 + "2) Zadat studentovi znamku\n"
 							 + "3) Smazani osoby z databaze\n"
 							 + "4) Vypis vsech ucitelu studenta\n"
-							 + "5) Prirazeni nbeo odebrani studenta vyucujicimu\n"
+							 + "5) Prirazeni nebo odebrani studenta vyucujicimu\n"
 							 + "6)\n"
 							 + "7)\n"
 							 + "8)\n"
@@ -143,13 +143,44 @@ public class Test {
 					databazeOsob.getUcitele(id);
 					break;
 				case 5:
-					System.out.println("Zadejte ID ucitele: ");
-					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeUcitele(id)) {
-						System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
-						id=pouzeCelaCisla(sc);
+					podminka = true;
+					while(podminka) {
+						System.out.println("Zvolte prislusnou operaci:\n"
+								+ "p - pridat studenta\n"
+								+ "o - odebrat studenta\n");
+						String vyber = sc.next();
+						if(vyber.contains("p")) {
+							System.out.println("Zadejte ID ucitele a studenta: ");
+							id = pouzeCelaCisla(sc);
+							int idst = pouzeCelaCisla(sc);
+							while(!databazeOsob.dbObsahujeUcitele(id)) {
+								System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
+								id=pouzeCelaCisla(sc);
+							}
+							while(!databazeOsob.dbObsahujeStudenta(idst)) {
+								System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+								idst=pouzeCelaCisla(sc);
+							}
+							databazeOsob.zadaniStudentu(id,idst);
+							podminka = false;
+						} else if(vyber.contains("o")) {;
+							System.out.println("Zadejte ID ucitele a studenta: ");
+							id = pouzeCelaCisla(sc);
+							int idst = pouzeCelaCisla(sc);
+							while(!databazeOsob.dbObsahujeUcitele(id)) {
+								System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
+								id=pouzeCelaCisla(sc);
+							}
+							while(!databazeOsob.dbObsahujeStudenta(idst)) {
+								System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+								idst=pouzeCelaCisla(sc);
+							}
+							databazeOsob.smazaniStudenta(id,idst);
+							podminka = false;
+						} else {
+							System.out.println("Zvolte prosim 'p' pro pridani studenta nebo 'o' pro odebrani studenta");
+						}
 					}
-					databazeOsob.getStudenti(id);
 					break;
 				case 16:
 					run = false;
@@ -161,18 +192,13 @@ public class Test {
 					databazeOsob.vypisID();
 					break;
 				case 19:
-					System.out.println("Zadejte ID ucitele a studenta: ");
+					System.out.println("Zadejte ID ucitele: ");
 					id = pouzeCelaCisla(sc);
-					int idst = pouzeCelaCisla(sc);
 					while(!databazeOsob.dbObsahujeUcitele(id)) {
 						System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
 						id=pouzeCelaCisla(sc);
 					}
-					while(!databazeOsob.dbObsahujeStudenta(idst)) {
-						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
-						idst=pouzeCelaCisla(sc);
-					}
-					databazeOsob.zadaniStudentu(id,idst);
+					databazeOsob.getStudenti(id);
 					break;
 			}
 		}

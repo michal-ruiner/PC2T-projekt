@@ -87,11 +87,20 @@ public class Databaze {
 	}
 	
 	public void zadaniStudentu(int iduc, int idst) {
-		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel) {
+		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
 			((Ucitel)databaze.get(iduc)).setStudenti(idst);
 			System.out.println("Zapis studenta uspesne proveden.");
 		}else {
-			System.out.println("Ucitel s timto ID neexistuje.");
+			System.out.println("Problem s ID ucitele nebo studenta.");
+		}
+	}
+	
+	public void smazaniStudenta(int iduc, int idst) {
+		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
+			((Ucitel)databaze.get(iduc)).smazaniOsobZListu(idst);
+			System.out.println("Smazani studenta uspesne provedeno.");
+		} else {
+			System.out.println("Problem s ID ucitele nebo studenta.");
 		}
 	}
 	

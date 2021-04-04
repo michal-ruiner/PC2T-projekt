@@ -15,14 +15,15 @@ public class Ucitel extends Osoba{
 		return studenti;
 	}
 
-	@Override
-	protected void smazaniOsobZListu(int id) {
-		// TODO Auto-generated method stub
-	}
-
 	public void setStudenti(int id) {
 		studenti.add(id);
 	}
 	
+	@Override
+	protected void smazaniOsobZListu(int id) {
+		// TODO Auto-generated method stub
+		int index = studenti.indexOf(id);
+		studenti.remove(index);
+	}	
 	
 }

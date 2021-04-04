@@ -42,7 +42,7 @@ public class Databaze {
 	public void getUcitele(int id) {
 		List<Integer> temp = new ArrayList<Integer>();
 		if(databaze.containsKey(id)) {
-			temp.addAll(databaze.get(id).vypisOsob());
+			temp.addAll(((Student)databaze.get(id)).vypisOsob());
 			for(Integer i: temp)
 				System.out.println("ID: "+i+", prijmeni: "+databaze.get(i).getPrijmeni());
 		}else {
@@ -54,7 +54,7 @@ public class Databaze {
 	public void zadaniZnamek(int id, int znamka) {
 		if(databaze.containsKey(id) && databaze.get(id) instanceof Student) {
 			((Student)databaze.get(id)).setZnamky(znamka);
-			System.out.println("Zapis znamku uspesne proveden.");
+			System.out.println("Zapis znamky uspesne proveden.");
 		}else {
 			System.out.println("Student s timto ID neexistuje.");
 		}
@@ -80,9 +80,30 @@ public class Databaze {
 			}
 			databaze.remove(id);
 			return true;
-		} else
+		} else {
 			System.out.println("Uzivatel s ID "+id+" nebyl v databazi nalezen.");
 			return false;
+		}
+	}
+	
+	public void zadaniStudentu(int iduc, int idst) {
+		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel) {
+			((Ucitel)databaze.get(iduc)).setStudenti(idst);
+			System.out.println("Zapis studenta uspesne proveden.");
+		}else {
+			System.out.println("Ucitel s timto ID neexistuje.");
+		}
+	}
+	
+	public void getStudenti(int id) {
+		List<Integer> temp = new ArrayList<Integer>();
+		if(databaze.containsKey(id)) {
+			temp.addAll(((Ucitel)databaze.get(id)).vypisOsob());
+			for(Integer i: temp)
+				System.out.println("ID: "+i+", prijmeni: "+databaze.get(i).getPrijmeni());
+		}else {
+			System.out.println("Ucitel s timto ID neexistuje.");
+		}
 	}
 	
 	//************************************************ Vypis databaze pro testovaci ucely

@@ -52,7 +52,7 @@ public class Test {
 							 + "2) Zadat studentovi znamku\n"
 							 + "3) Smazani osoby z databaze\n"
 							 + "4) Vypis vsech ucitelu studenta\n"
-							 + "5)\n"
+							 + "5) Prirazeni nbeo odebrani studenta vyucujicimu\n"
 							 + "6)\n"
 							 + "7)\n"
 							 + "8)\n"
@@ -142,6 +142,15 @@ public class Test {
 					}
 					databazeOsob.getUcitele(id);
 					break;
+				case 5:
+					System.out.println("Zadejte ID ucitele: ");
+					id = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeUcitele(id)) {
+						System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
+						id=pouzeCelaCisla(sc);
+					}
+					databazeOsob.getStudenti(id);
+					break;
 				case 16:
 					run = false;
 					break;
@@ -152,13 +161,18 @@ public class Test {
 					databazeOsob.vypisID();
 					break;
 				case 19:
-					System.out.println("Zadejte ID studenta: ");
+					System.out.println("Zadejte ID ucitele a studenta: ");
 					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeStudenta(id)) {
-						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+					int idst = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeUcitele(id)) {
+						System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
 						id=pouzeCelaCisla(sc);
 					}
-					databazeOsob.ziskaniZnamek(id);
+					while(!databazeOsob.dbObsahujeStudenta(idst)) {
+						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+						idst=pouzeCelaCisla(sc);
+					}
+					databazeOsob.zadaniStudentu(id,idst);
 					break;
 			}
 		}

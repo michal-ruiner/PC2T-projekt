@@ -12,4 +12,9 @@ public class Ucitel extends Osoba{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void smazaniOsobZListu(int id) {
+		// TODO Auto-generated method stub
+	}
 }

@@ -27,6 +27,11 @@ public class Student extends Osoba {
 	public void setZnamky(int znamka) {
 		znamky.add(znamka);
 	}
-	
-	
+
+	@Override
+	protected void smazaniOsobZListu(int id) {
+		// TODO Auto-generated method stub
+		int index = ucitele.indexOf(id);
+		ucitele.remove(index); // list.remove potrebuje index hodnoty ke smazani
+	}
 }

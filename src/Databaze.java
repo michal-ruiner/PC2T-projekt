@@ -72,6 +72,12 @@ public class Databaze {
 	public boolean smazaniOsoby(int id) {
 		if(databaze.containsKey(id)){
 			System.out.println("Uzivatel "+databaze.get(id).getPrijmeni()+" s ID "+id+" byl uspesne smazan.");
+			for (Integer i : databaze.keySet()) {
+				if(databaze.get(i) instanceof Student) {
+					if(((Student)databaze.get(i)).vypisOsob().contains(id))
+						((Student)databaze.get(i)).smazaniOsobZListu(id);
+				}
+			}
 			databaze.remove(id);
 			return true;
 		} else

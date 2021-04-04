@@ -38,4 +38,5 @@ public abstract class Osoba {
 	//*******************************************************
 
 	protected abstract List<Integer> vypisOsob();
+	protected abstract void smazaniOsobZListu(int id);
 }

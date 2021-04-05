@@ -4,11 +4,15 @@ public abstract class Osoba {
 	private String jmeno;
 	private String prijmeni;
 	private int rok;
+	private static int keyID = 1;
+	private int ID;
 	
 	public Osoba(String jmeno, String prijmeni, int rok) {
 		this.jmeno=jmeno;
 		this.prijmeni=prijmeni;
 		this.rok=rok;
+		this.ID=keyID;
+		keyID++;
 	}
 
 	//******************************************************* Sekce Gettery a Settery
@@ -35,6 +39,15 @@ public abstract class Osoba {
 	public void setRok(int rok) {
 		this.rok = rok;
 	}
+	
+	public int getID() {
+		return ID;
+	}
+	
+	public static int getKeyID() {
+		return keyID;
+	}
+	
 	//*******************************************************
 
 	protected abstract List<Integer> vypisOsob();

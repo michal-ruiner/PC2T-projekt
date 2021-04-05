@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ucitel extends Osoba{
+public class Ucitel extends Osoba implements Comparable<Ucitel>{
 	List<Integer> studenti;
 	public Ucitel(String jmeno, String prijmeni, int rok) {
 		super(jmeno, prijmeni, rok);
@@ -24,6 +24,16 @@ public class Ucitel extends Osoba{
 		// TODO Auto-generated method stub
 		int index = studenti.indexOf(id);
 		studenti.remove(index);
+	}
+
+	@Override
+	public int compareTo(Ucitel uc) {
+		// TODO Auto-generated method stub
+		int porovnani = ((Ucitel)uc).studenti.size();
+		return porovnani-this.studenti.size();
 	}	
-	
+	@Override
+    public String toString() {
+        return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", pocet studentu: "+studenti.size();
+    }
 }

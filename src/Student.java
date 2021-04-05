@@ -38,4 +38,9 @@ public class Student extends Osoba {
 		int index = ucitele.indexOf(id);
 		ucitele.remove(index); // list.remove potrebuje index hodnoty ke smazani
 	}
+	
+	@Override
+    public String toString() {
+        return "ID: "+getID()+", prijmeni: "+getPrijmeni();
+    }
 }

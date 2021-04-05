@@ -47,15 +47,18 @@ public class Test {
 		int id = 0;
 		Databaze databazeOsob=new Databaze();
 		//****************************************************************** Testing users
+		databazeOsob.setUcitel("ucitelc", "ucitelc", 1978);
 		databazeOsob.setUcitel("ucitela", "ucitela", 1984);
 		databazeOsob.setUcitel("ucitelb", "ucitelb", 1978);
 		List<Integer> listUcitelu1 = new ArrayList<Integer>();
 		List<Integer> listUcitelu2 = new ArrayList<Integer>();
-		listUcitelu1.add(1);
+		List<Integer> listUcitelu3 = new ArrayList<Integer>();
+		listUcitelu1.add(3);
+		//listUcitelu2.add(1);
 		listUcitelu2.add(1);
-		listUcitelu2.add(2);
-		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);
+		listUcitelu2.add(3);
 		databazeOsob.setStudent("studentb", "studentb", 2015, listUcitelu2);
+		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);
 		//******************************************************************
 		while(run) {
 			System.out.println("\n****Zvolte prosim moznost****");
@@ -64,16 +67,16 @@ public class Test {
 							 + "3) Smazani osoby z databaze\n"
 							 + "4) Vypis vsech ucitelu studenta\n"
 							 + "5) Prirazeni nebo odebrani studenta vyucujicimu\n"
-							 /*+ "6)\n"
-							 + "7)\n"
-							 + "8)\n"
-							 + "9)\n"
-							 + "10)\n"
-							 + "11)\n"
-							 + "12)\n"
-							 + "13)\n"
-							 + "14)\n"
-							 + "15)\n"*/
+							 //+ "6)\n"
+							 + "7) Vypis ucitelu\n"
+							 //+ "8)\n"
+							 + "9) Vypis osob v kategoriich abecedne (podle prijmeni)\n"
+							 //+ "10)\n"
+							 //+ "11)\n"
+							 //+ "12)\n"
+							 //+ "13)\n"
+							 //+ "14)\n"
+							 //+ "15)\n"
 							 + "16) Ukonceni aplikace\n"
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"
@@ -192,6 +195,12 @@ public class Test {
 							System.out.println("Zvolte prosim 'p' pro pridani studenta nebo 'o' pro odebrani studenta");
 						}
 					}
+					break;
+				case 7:
+					databazeOsob.vypisUcitelu();
+					break;
+				case 9:
+					databazeOsob.vypisOsob();
 					break;
 				case 16:
 					run = false;

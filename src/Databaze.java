@@ -1,22 +1,25 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-public class Databaze {
+public class Databaze{
 	private HashMap<Integer, Osoba> databaze;
-	private int index = 1;
 	
 	public Databaze(){
 		databaze=new HashMap<Integer, Osoba>();
 	}
 
 	public void setUcitel(String jmeno, String prijmeni, int rok) {
-		databaze.put(index++, new Ucitel(jmeno,prijmeni,rok));
+		databaze.put(Osoba.getKeyID(), new Ucitel(jmeno,prijmeni,rok));
 	}
 	
 	public void setStudent(String jmeno, String prijmeni, int rok, List<Integer> prirazeniUcitelu) {
-		databaze.put(index++, new Student(jmeno,prijmeni,rok, prirazeniUcitelu));
-		int tempid=index-1;
+		databaze.put(Osoba.getKeyID(), new Student(jmeno,prijmeni,rok, prirazeniUcitelu));
+		int tempid=Osoba.getKeyID()-1;
 		for(int i = 0; i<prirazeniUcitelu.size();i++) {
 			zadaniStudentu(prirazeniUcitelu.get(i), tempid);
 		}
@@ -126,6 +129,49 @@ public class Databaze {
 				System.out.println("Ucitel se nenachazel v seznamu studenta.");
 		} else {
 			System.out.println("Problem s ID ucitele nebo studenta.");
+		}
+	}
+	
+	// Vypis ucitelu razenych podle aktualniho poctu studentu
+	public void vypisUcitelu() {
+		ArrayList<Ucitel> arraylist = new ArrayList<Ucitel>();
+		for (Integer i : databaze.keySet()) {
+			if (databaze.get(i) instanceof Ucitel) {
+				arraylist.add(((Ucitel)databaze.get(i)));
+			}
+		}
+		System.out.println("Pred setrizenim: ");
+		for(Ucitel asd: arraylist){
+			System.out.println(asd);
+		}
+		System.out.println("\nPo setrizeni: ");
+		Collections.sort(arraylist);
+		for(Ucitel str: arraylist){
+			System.out.println(str);
+	   }
+	}
+	
+	// Vypis osob v kategoriich podle abecedy
+	public void vypisOsob() {
+		Set<Osoba> osoby = new TreeSet<Osoba>(new Comparator<Osoba>() {
+			@Override
+			public int compare(Osoba o1, Osoba o2) {
+				// TODO Auto-generated method stub
+				return o1.getPrijmeni().compareTo(o2.getPrijmeni());
+			}
+		});
+		Set <Integer> klice=databaze.keySet();
+		for (Integer klic:klice)
+			osoby.add(databaze.get(klic));
+		System.out.println("****Ucitele****");
+		for(Osoba number: osoby) {
+			if(number instanceof Ucitel)
+				System.out.println(number);
+		}
+		System.out.println("\n****Studenti****");
+		for(Osoba number: osoby) {
+			if(number instanceof Student)
+				System.out.println(number);
 		}
 	}
 	

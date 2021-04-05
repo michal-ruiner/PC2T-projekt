@@ -51,6 +51,7 @@ public class Test {
 		databazeOsob.setUcitel("ucitelb", "ucitelb", 1978);
 		List<Integer> listUcitelu1 = new ArrayList<Integer>();
 		List<Integer> listUcitelu2 = new ArrayList<Integer>();
+		listUcitelu1.add(1);
 		listUcitelu2.add(1);
 		listUcitelu2.add(2);
 		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);

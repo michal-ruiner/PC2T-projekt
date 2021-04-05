@@ -82,6 +82,9 @@ public class Databaze {
 				if(databaze.get(i) instanceof Student) {
 					if(((Student)databaze.get(i)).vypisOsob().contains(id))
 						((Student)databaze.get(i)).smazaniOsobZListu(id);
+				} else {
+					if(((Ucitel)databaze.get(i)).vypisOsob().contains(id))
+						((Ucitel)databaze.get(i)).smazaniOsobZListu(id);
 				}
 			}
 			databaze.remove(id);

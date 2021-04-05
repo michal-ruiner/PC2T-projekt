@@ -46,6 +46,16 @@ public class Test {
 		int volba;
 		int id = 0;
 		Databaze databazeOsob=new Databaze();
+		//****************************************************************** Testing users
+		databazeOsob.setUcitel("ucitela", "ucitela", 1984);
+		databazeOsob.setUcitel("ucitelb", "ucitelb", 1978);
+		List<Integer> listUcitelu1 = new ArrayList<Integer>();
+		List<Integer> listUcitelu2 = new ArrayList<Integer>();
+		listUcitelu2.add(1);
+		listUcitelu2.add(2);
+		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);
+		databazeOsob.setStudent("studentb", "studentb", 2015, listUcitelu2);
+		//******************************************************************
 		while(run) {
 			System.out.println("\n****Zvolte prosim moznost****");
 			System.out.println("1) Pridani nove osoby \n"
@@ -53,7 +63,7 @@ public class Test {
 							 + "3) Smazani osoby z databaze\n"
 							 + "4) Vypis vsech ucitelu studenta\n"
 							 + "5) Prirazeni nebo odebrani studenta vyucujicimu\n"
-							 + "6)\n"
+							 /*+ "6)\n"
 							 + "7)\n"
 							 + "8)\n"
 							 + "9)\n"
@@ -62,7 +72,7 @@ public class Test {
 							 + "12)\n"
 							 + "13)\n"
 							 + "14)\n"
-							 + "15)\n"
+							 + "15)\n"*/
 							 + "16) Ukonceni aplikace\n"
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"

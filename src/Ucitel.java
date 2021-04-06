@@ -34,6 +34,6 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 	}	
 	@Override
     public String toString() {
-        return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", pocet studentu: "+studenti.size();
+		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok();
     }
 }

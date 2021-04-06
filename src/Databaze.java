@@ -100,7 +100,7 @@ public class Databaze{
 	
 	// Pridani studentu do listu ucitele a naopak
 	public void zadaniStudentu(int iduc, int idst) {
-		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
+		if(databaze.containsKey(iduc) && databaze.containsKey(idst) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
 			if(!((Ucitel)databaze.get(iduc)).vypisOsob().contains(idst)) {
 				((Ucitel)databaze.get(iduc)).setStudenti(idst);
 				System.out.println("Zapis studenta uspesne proveden.");
@@ -117,7 +117,7 @@ public class Databaze{
 	
 	// Odstraneni studenta z listu ucitele a naopak
 	public void smazaniStudenta(int iduc, int idst) {
-		if(databaze.containsKey(iduc) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
+		if(databaze.containsKey(iduc) && databaze.containsKey(idst) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
 			if(((Ucitel)databaze.get(iduc)).vypisOsob().contains(idst)) {
 				((Ucitel)databaze.get(iduc)).smazaniOsobZListu(idst);
 				System.out.println("Smazani studenta uspesne provedeno.");
@@ -126,7 +126,7 @@ public class Databaze{
 			if(((Student)databaze.get(idst)).vypisOsob().contains(iduc))
 				((Student)databaze.get(idst)).smazaniOsobZListu(iduc);
 			else
-				System.out.println("Ucitel se nenachazel v seznamu studenta.");
+				System.out.println("Ucitel se nenachazi v seznamu studenta.");
 		} else {
 			System.out.println("Problem s ID ucitele nebo studenta.");
 		}
@@ -142,12 +142,12 @@ public class Databaze{
 		}
 		System.out.println("Pred setrizenim: ");
 		for(Ucitel asd: arraylist){
-			System.out.println(asd);
+			System.out.println("ID: "+asd.getID()+", pocet studentu: "+asd.vypisOsob().size());
 		}
 		System.out.println("\nPo setrizeni: ");
 		Collections.sort(arraylist);
 		for(Ucitel str: arraylist){
-			System.out.println(str);
+			System.out.println("ID: "+str.getID()+", pocet studentu: "+str.vypisOsob().size());
 	   }
 	}
 	

@@ -41,6 +41,6 @@ public class Student extends Osoba {
 	
 	@Override
     public String toString() {
-        return "ID: "+getID()+", prijmeni: "+getPrijmeni();
+        return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok();
     }
 }

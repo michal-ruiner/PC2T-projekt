@@ -61,9 +61,25 @@ public class Databaze{
 	// Zadani znamek studentovi
 	public void zadaniZnamek(int id, int znamka) {
 		if(databaze.containsKey(id) && databaze.get(id) instanceof Student) {
+			int tempStipendium = ((Student)databaze.get(id)).getStipendium();
 			((Student)databaze.get(id)).setZnamky(znamka);
 			System.out.println("Zapis znamky uspesne proveden.");
-		}else {
+			for(Integer i : databaze.keySet()) {
+				if(databaze.get(i) instanceof Ucitel) {
+					if(((Ucitel)databaze.get(i)).vypisOsob().contains(id)) {
+						int a;
+						if (((Student)databaze.get(id)).getStipendium() > 0) {
+							a = 1;
+							((Ucitel)databaze.get(i)).setPocetStudentuSeStipendiem(a);
+						} else if (tempStipendium > 0) {
+							a=-1;
+							((Ucitel)databaze.get(i)).setPocetStudentuSeStipendiem(a);
+						}
+					}
+						
+				}
+			}
+		} else {
 			System.out.println("Student s timto ID neexistuje.");
 		}
 	}
@@ -71,7 +87,11 @@ public class Databaze{
 	// Ziskani znamek studenta
 	public void ziskaniZnamek(int id) {
 		if(databaze.containsKey(id) && databaze.get(id) instanceof Student) {
-			((Student)databaze.get(id)).getZnamky();
+			if (((Student)databaze.get(id)).znamky.size()>0){
+				((Student)databaze.get(id)).getZnamky();
+				((Student)databaze.get(id)).getPrumer();
+			} else
+				System.out.println("Tomuto studentovi zatim zadne znamky zadany nebyly.");
 		}else {
 			System.out.println("Student s timto ID neexistuje.");
 		}
@@ -140,10 +160,10 @@ public class Databaze{
 				arraylist.add(((Ucitel)databaze.get(i)));
 			}
 		}
-		System.out.println("Pred setrizenim: ");
+		/*System.out.println("Pred setrizenim: ");
 		for(Ucitel asd: arraylist){
 			System.out.println("ID: "+asd.getID()+", pocet studentu: "+asd.vypisOsob().size());
-		}
+		}*/
 		System.out.println("\nPo setrizeni: ");
 		Collections.sort(arraylist);
 		for(Ucitel str: arraylist){
@@ -172,6 +192,18 @@ public class Databaze{
 		for(Osoba number: osoby) {
 			if(number instanceof Student)
 				System.out.println(number);
+		}
+	}
+	
+	public void informaceOsoby(int id) {
+		if (databaze.containsKey(id)) {
+			System.out.println("Jmeno: "+databaze.get(id).getJmeno()+"\n"
+							 + "Prijmeni: "+databaze.get(id).getPrijmeni()+"\n"
+							 + "Rok narozeni: "+databaze.get(id).getRok());
+			if(databaze.get(id) instanceof Student)
+				System.out.println("Financni ohodnoceni (stipendium): "+((Student)databaze.get(id)).getStipendium()+" CZK");
+			else		
+				System.out.println("Financni ohodnoceni (cista mzda): "+((Ucitel)databaze.get(id)).vypocetCisteMzdy()+" CZK");
 		}
 	}
 	

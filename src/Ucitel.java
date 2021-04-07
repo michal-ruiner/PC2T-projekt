@@ -2,11 +2,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ucitel extends Osoba implements Comparable<Ucitel>{
+	final int studentPenize = 2000;
+	final int stipendiumOdmena = 500;
+	private int pocetStudentuSeStipendiem = 0;
 	List<Integer> studenti;
+	
 	public Ucitel(String jmeno, String prijmeni, int rok) {
 		super(jmeno, prijmeni, rok);
 		// TODO Auto-generated constructor stub	
 		studenti = new ArrayList<Integer>();
+	}
+	
+	public float vypocetCisteMzdy() {
+		int pocetStudentu=0;
+		int hrubaMzda = 0;
+		float cistaMzda;
+		cistaMzda=0;
+		for (int i = 0; i < studenti.size(); i++)
+			pocetStudentu++;
+		hrubaMzda = (pocetStudentu*studentPenize)+pocetStudentuSeStipendiem*stipendiumOdmena;
+		cistaMzda = (float)(hrubaMzda - ((hrubaMzda*0.15+2320)+(hrubaMzda*0.065)+(hrubaMzda*0.045)));
+		if (cistaMzda > 0)
+			return cistaMzda;
+		else
+			return 0;
+	}
+
+	public void setPocetStudentuSeStipendiem(int a) {
+		this.pocetStudentuSeStipendiem+=a;
 	}
 
 	@Override
@@ -29,11 +52,11 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 	@Override
 	public int compareTo(Ucitel uc) {
 		// TODO Auto-generated method stub
-		int porovnani = ((Ucitel)uc).studenti.size();
+		int porovnani = uc.studenti.size();
 		return porovnani-this.studenti.size();
-	}	
+	}
 	@Override
     public String toString() {
-		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok();
+		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", cista mzda: "+vypocetCisteMzdy();
     }
 }

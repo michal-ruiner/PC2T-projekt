@@ -67,7 +67,7 @@ public class Test {
 							 + "3) Smazani osoby z databaze\n"
 							 + "4) Vypis vsech ucitelu studenta\n"
 							 + "5) Prirazeni nebo odebrani studenta vyucujicimu\n"
-							 //+ "6)\n"
+							 + "6) Vypis informaci o jedne osobe\n"
 							 + "7) Vypis ucitelu\n"
 							 //+ "8)\n"
 							 + "9) Vypis osob v kategoriich abecedne (podle prijmeni)\n"
@@ -80,7 +80,7 @@ public class Test {
 							 + "16) Ukonceni aplikace\n"
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"
-							 + "18) Vypis ID\n"
+							 + "18) Vypis znamek\n"
 							 + "19) testing purpose");
 			volba=pouzeCelaCisla(sc);
 			switch(volba) {
@@ -196,6 +196,15 @@ public class Test {
 						}
 					}
 					break;
+				case 6:
+					System.out.println("Zadejte ID uzivatele: ");
+					id = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeUzivatele(id)) {
+						System.out.println("Uzivatel s timto ID neexistuje, zadejte prosim nove id: ");
+						id=pouzeCelaCisla(sc);
+					}
+					databazeOsob.informaceOsoby(id);
+					break;
 				case 7:
 					databazeOsob.vypisUcitelu();
 					break;
@@ -209,7 +218,13 @@ public class Test {
 					databazeOsob.vypisDatabaze();
 					break;
 				case 18:
-					databazeOsob.vypisID();
+					System.out.println("Zadejte ID studenta: ");
+					id = pouzeCelaCisla(sc);
+					while(!databazeOsob.dbObsahujeStudenta(id)) {
+						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+						id=pouzeCelaCisla(sc);
+					}
+					databazeOsob.ziskaniZnamek(id);
 					break;
 				case 19:
 					System.out.println("Zadejte ID ucitele: ");

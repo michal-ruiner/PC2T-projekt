@@ -21,11 +21,14 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 		for (int i = 0; i < studenti.size(); i++)
 			pocetStudentu++;
 		hrubaMzda = (pocetStudentu*studentPenize)+pocetStudentuSeStipendiem*stipendiumOdmena;
-		cistaMzda = (float)(hrubaMzda - ((hrubaMzda*0.15+2320)+(hrubaMzda*0.065)+(hrubaMzda*0.045)));
-		if (cistaMzda > 0)
-			return cistaMzda;
-		else
-			return 0;
+		cistaMzda = (float)(hrubaMzda - ((hrubaMzda*0.065)+(hrubaMzda*0.045)));
+		double dan = hrubaMzda*0.15;
+		if (dan <= 2320)
+			dan = 0;
+		cistaMzda-=dan;
+		if(hrubaMzda*0.15 > 2320)
+			cistaMzda+=2320;
+		return cistaMzda;
 	}
 
 	public void setPocetStudentuSeStipendiem(int a) {

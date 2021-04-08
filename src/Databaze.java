@@ -163,8 +163,8 @@ public class Databaze{
 		/*System.out.println("Pred setrizenim: ");
 		for(Ucitel asd: arraylist){
 			System.out.println("ID: "+asd.getID()+", pocet studentu: "+asd.vypisOsob().size());
-		}*/
-		System.out.println("\nPo setrizeni: ");
+		}
+		System.out.println("\nPo setrizeni: ");*/
 		Collections.sort(arraylist);
 		for(Ucitel str: arraylist){
 			System.out.println("ID: "+str.getID()+", pocet studentu: "+str.vypisOsob().size());
@@ -173,16 +173,17 @@ public class Databaze{
 	
 	// Vypis osob v kategoriich podle abecedy
 	public void vypisOsob() {
-		Set<Osoba> osoby = new TreeSet<Osoba>(new Comparator<Osoba>() {
+		List<Osoba> osoby = new ArrayList<Osoba>();
+		Set <Integer> klice=databaze.keySet();
+		for (Integer klic:klice)
+			osoby.add(databaze.get(klic));
+		Collections.sort(osoby,new Comparator<Osoba>(){
 			@Override
 			public int compare(Osoba o1, Osoba o2) {
 				// TODO Auto-generated method stub
 				return o1.getPrijmeni().compareTo(o2.getPrijmeni());
 			}
 		});
-		Set <Integer> klice=databaze.keySet();
-		for (Integer klic:klice)
-			osoby.add(databaze.get(klic));
 		System.out.println("****Ucitele****");
 		for(Osoba number: osoby) {
 			if(number instanceof Ucitel)
@@ -205,6 +206,22 @@ public class Databaze{
 			else		
 				System.out.println("Financni ohodnoceni (cista mzda): "+((Ucitel)databaze.get(id)).vypocetCisteMzdy()+" CZK");
 		}
+	}
+	
+	
+	public void vypisStudentu(int id) {
+		if (databaze.containsKey(id) && databaze.get(id) instanceof Ucitel) {
+			ArrayList<Integer> tempArID = new ArrayList<Integer>();
+			ArrayList<Student> studenti = new ArrayList<Student>();
+			tempArID.addAll(((Ucitel)databaze.get(id)).vypisOsob());
+			for(int i = 0; i < tempArID.size(); i++) {
+				studenti.add(((Student)databaze.get(tempArID.get(i))));
+			}
+			Collections.sort(studenti);
+			for(Student asd: studenti)
+				System.out.println("ID: "+asd.getID()+", prumer studenta: "+asd.getPrumer());
+		} else
+			System.out.println("Neco se pokazilo");
 	}
 	
 	//************************************************ Vypis databaze pro testovaci ucely

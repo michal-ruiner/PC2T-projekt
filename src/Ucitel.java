@@ -58,6 +58,7 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 		int porovnani = uc.studenti.size();
 		return porovnani-this.studenti.size();
 	}
+	
 	@Override
     public String toString() {
 		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", cista mzda: "+vypocetCisteMzdy();

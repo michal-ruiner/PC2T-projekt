@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Databaze{
 	private HashMap<Integer, Osoba> databaze;
@@ -68,10 +67,12 @@ public class Databaze{
 				if(databaze.get(i) instanceof Ucitel) {
 					if(((Ucitel)databaze.get(i)).vypisOsob().contains(id)) {
 						int a;
-						if (((Student)databaze.get(id)).getStipendium() > 0) {
+						if (((Student)databaze.get(id)).getStipendium() > 0 && tempStipendium > 0) {
+							continue;
+						} else if (((Student)databaze.get(id)).getStipendium() != 0 && tempStipendium == 0) {
 							a = 1;
 							((Ucitel)databaze.get(i)).setPocetStudentuSeStipendiem(a);
-						} else if (tempStipendium > 0) {
+						} else if (((Student)databaze.get(id)).getStipendium() == 0 && tempStipendium > 0) {
 							a=-1;
 							((Ucitel)databaze.get(i)).setPocetStudentuSeStipendiem(a);
 						}

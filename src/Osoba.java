@@ -52,17 +52,4 @@ public abstract class Osoba {
 
 	protected abstract List<Integer> vypisOsob();
 	protected abstract void smazaniOsobZListu(int id);
-	
-	@Override
-    public int hashCode() { 
-		return ID; 
-	}
-	
-	@Override
-    public boolean equals(Object obj)
-    {
-        if (((Osoba)obj).getID() == ID)
-            return true;
-        return false;
-    }
 }

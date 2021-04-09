@@ -68,6 +68,7 @@ public class Student extends Osoba implements Comparable<Student> {
 	@Override
 	public int compareTo(Student o) {
 		// TODO Auto-generated method stub
-		return (int) (this.getPrumer()-o.getPrumer());
+		//return (int) (this.getPrumer()-o.getPrumer());
+		return (int) (Float.compare(this.getPrumer(), o.getPrumer()));
 	}
 }

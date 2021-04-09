@@ -226,15 +226,17 @@ public class Databaze{
 	}
 	
 	public void financniProstredky() {
-		int financniProstredky = 0;
+		int hrubeMzdy = 0;
+		int stipendia = 0;
 		for(Integer i : databaze.keySet()) {
 			if(databaze.get(i) instanceof Ucitel) {
-				financniProstredky+=((Ucitel)databaze.get(i)).vypocetCisteMzdy();
+				hrubeMzdy+=((Ucitel)databaze.get(i)).vypocetHrubeMzdy();
 			} else {
-				financniProstredky+=((Student)databaze.get(i)).getStipendium();
+				stipendia+=((Student)databaze.get(i)).getStipendium();
 			}
 		}
-		System.out.println("Celkove financni prostredky jsou "+financniProstredky+" CZK.");
+		System.out.println("Celkove financni prostredky na hrube mzdy jsou "+hrubeMzdy+" CZK.");
+		System.out.println("Celkove financni prostredky na stipendia jsou "+stipendia+" CZK.");
 	}
 	
 	//************************************************ Vypis databaze pro testovaci ucely

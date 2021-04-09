@@ -55,7 +55,7 @@ public class Test {
 		List<Integer> listUcitelu3 = new ArrayList<Integer>();
 		listUcitelu1.add(3);
 		listUcitelu2.add(1);
-		listUcitelu2.add(3);
+		//listUcitelu2.add(3);
 		databazeOsob.setStudent("studentb", "studentb", 2015, listUcitelu2);
 		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);
 		databazeOsob.setStudent("studentc", "studentc", 1994, listUcitelu1);
@@ -72,7 +72,7 @@ public class Test {
 							 + "7) Vypis ucitelu\n"
 							 + "8) Vypis studentu ucitele\n"
 							 + "9) Vypis osob v kategoriich abecedne (podle prijmeni)\n"
-							 //+ "10)\n"
+							 + "10) Potrebne financni prostredky\n"
 							 //+ "11)\n"
 							 //+ "12)\n"
 							 //+ "13)\n"
@@ -220,6 +220,9 @@ public class Test {
 					break;
 				case 9:
 					databazeOsob.vypisOsob();
+					break;
+				case 10:
+					databazeOsob.financniProstredky();
 					break;
 				case 16:
 					run = false;

@@ -225,6 +225,18 @@ public class Databaze{
 			System.out.println("Neco se pokazilo");
 	}
 	
+	public void financniProstredky() {
+		int financniProstredky = 0;
+		for(Integer i : databaze.keySet()) {
+			if(databaze.get(i) instanceof Ucitel) {
+				financniProstredky+=((Ucitel)databaze.get(i)).vypocetCisteMzdy();
+			} else {
+				financniProstredky+=((Student)databaze.get(i)).getStipendium();
+			}
+		}
+		System.out.println("Celkove financni prostredky jsou "+financniProstredky+" CZK.");
+	}
+	
 	//************************************************ Vypis databaze pro testovaci ucely
 	public void vypisDatabaze(){
 		if(databaze.size() > 0) {

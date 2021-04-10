@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import SQLdb.DB_Connection;
 
 public class Databaze{
 	private HashMap<Integer, Osoba> databaze;
@@ -257,6 +258,13 @@ public class Databaze{
 		System.out.println("Celkove financni prostredky na hrube mzdy jsou "+hrubeMzdy+" CZK.");
 		System.out.println("Celkove financni prostredky na stipendia jsou "+stipendia+" CZK.");
 	}
+	
+	//************************************************ SQL cast
+	public void pripojeniDatabaze(String nazevSouboru) {
+		DB_Connection.PripojeniKDatabazi(nazevSouboru);
+		DB_Connection.OdpojeniOdDatabaze();
+	}
+	//************************************************
 	
 	//************************************************ Vypis databaze pro testovaci ucely
 	public void vypisDatabaze(){

@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +91,7 @@ public class Test {
 							 + "8) Vypis studentu ucitele\n"
 							 + "9) Vypis osob v kategoriich abecedne (podle prijmeni)\n"
 							 + "10) Potrebne financni prostredky\n"
-							 //+ "11)\n"
+							 + "11) Pripojeni k SQL databazi\n"
 							 //+ "12)\n"
 							 //+ "13)\n"
 							 //+ "14)\n"
@@ -268,6 +270,18 @@ public class Test {
 					break;
 				case 10:
 					databazeOsob.financniProstredky();
+					break;
+				case 11:
+					try {
+					      File soubor = new File("name.txt");
+					      Scanner cteniSouboru = new Scanner(soubor);
+					      String nazevSouboru = cteniSouboru.nextLine();
+					      cteniSouboru.close();
+					      databazeOsob.pripojeniDatabaze(nazevSouboru);
+					    } catch (FileNotFoundException e) {
+					      System.out.println("Doslo k chybe.");
+					      e.printStackTrace();
+					    }
 					break;
 				case 16:
 					run = false;

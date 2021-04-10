@@ -61,6 +61,7 @@ public class Test {
 		int volba;
 		int id = 0;
 		Databaze databazeOsob=new Databaze();
+		/*
 		//****************************************************************** Testing users
 		databazeOsob.setUcitel("ucitelc", "ucitelc", 1978);
 		databazeOsob.setUcitel("ucitela", "ucitela", 1984);
@@ -75,6 +76,7 @@ public class Test {
 		databazeOsob.setStudent("studentc", "studentc", 1994, listUcitelu1);
 		databazeOsob.setStudent("student", "studentb", 2015, listUcitelu2);
 		//******************************************************************
+		 */
 		while(run) {
 			System.out.println("\n****Zvolte prosim moznost****");
 			System.out.println("1) Pridani nove osoby \n"
@@ -113,14 +115,14 @@ public class Test {
 						else
 							System.out.println("\nNevybral jste spravnou roli.");
 					}
-					if (role != 0) {
-						System.out.println("Zadejte jmeno, prijmeni, rok narozeni: ");
-						String jmeno = korektniJmeno(sc);
-						String prijmeni = korektniJmeno(sc);
-						int rok = korektniRok(sc);
-						if(role == 1) {
+					if (role != 0 && role == 1) {
+						int pocet=databazeOsob.prirazeniUcitelu();
+						if (pocet > 0) {
+							System.out.println("Zadejte jmeno, prijmeni, rok narozeni: ");
+							String jmeno = korektniJmeno(sc);
+							String prijmeni = korektniJmeno(sc);
+							int rok = korektniRok(sc);
 							List<Integer> listUcitelu = new ArrayList<Integer>();
-							int pocet=databazeOsob.prirazeniUcitelu();
 							System.out.println("\nKolika ucitelum bude student prirazen: ");
 							int pocetUcitelu = zadaniUcitelu(sc, pocet);
 							for(int i = 0; i < pocetUcitelu; i++) {
@@ -137,8 +139,15 @@ public class Test {
 									listUcitelu.add(id);	
 							}
 							databazeOsob.setStudent(jmeno, prijmeni, rok, listUcitelu);
-						} else
-							databazeOsob.setUcitel(jmeno, prijmeni, rok);
+						} else {
+							System.out.println("Zadny ucitel zatim nebyl zadan, student musi mit alespon 1 ucitele.");
+						}
+					} else if (role != 0 && role == 2) {
+						System.out.println("Zadejte jmeno, prijmeni, rok narozeni: ");
+						String jmeno = korektniJmeno(sc);
+						String prijmeni = korektniJmeno(sc);
+						int rok = korektniRok(sc);
+						databazeOsob.setUcitel(jmeno, prijmeni, rok);
 					}
 					break;
 				case 2:

@@ -48,12 +48,14 @@ public class Databaze{
 	//Vyber ucitelu pro studenta
 	public int prirazeniUcitelu() {
 		int pocetUcitelu = 0;
+		System.out.println("Aktualni ucitele v databazi: ");
 		for(Integer i: databaze.keySet()) {
 			if(databaze.get(i) instanceof Ucitel) {
 				System.out.println("ID: "+i+", prijmeni: "+databaze.get(i).getPrijmeni());
 				pocetUcitelu++;
 			}
 		}
+		System.out.println();
 		return pocetUcitelu;
 	}
 	
@@ -186,27 +188,30 @@ public class Databaze{
 	
 	// Vypis osob v kategoriich podle abecedy
 	public void vypisOsob() {
-		List<Osoba> osoby = new ArrayList<Osoba>();
-		Set <Integer> klice=databaze.keySet();
-		for (Integer klic:klice)
-			osoby.add(databaze.get(klic));
-		Collections.sort(osoby,new Comparator<Osoba>(){
-			@Override
-			public int compare(Osoba o1, Osoba o2) {
-				// TODO Auto-generated method stub
-				return o1.getPrijmeni().compareTo(o2.getPrijmeni());
+		if(databaze.size() > 0) {
+			List<Osoba> osoby = new ArrayList<Osoba>();
+			Set <Integer> klice=databaze.keySet();
+			for (Integer klic:klice)
+				osoby.add(databaze.get(klic));
+			Collections.sort(osoby,new Comparator<Osoba>(){
+				@Override
+				public int compare(Osoba o1, Osoba o2) {
+					// TODO Auto-generated method stub
+					return o1.getPrijmeni().compareTo(o2.getPrijmeni());
+				}
+			});
+			System.out.println("****Ucitele****");
+			for(Osoba number: osoby) {
+				if(number instanceof Ucitel)
+					System.out.println(number);
 			}
-		});
-		System.out.println("****Ucitele****");
-		for(Osoba number: osoby) {
-			if(number instanceof Ucitel)
-				System.out.println(number);
-		}
-		System.out.println("\n****Studenti****");
-		for(Osoba number: osoby) {
-			if(number instanceof Student)
-				System.out.println(number);
-		}
+			System.out.println("\n****Studenti****");
+			for(Osoba number: osoby) {
+				if(number instanceof Student)
+					System.out.println(number);
+			}
+		} else
+			System.out.println("Zadna osoba zatim nebyla zadana.");
 	}
 	
 	// Ziskani informaci o konkretni osobe podle ID

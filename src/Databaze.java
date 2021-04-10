@@ -45,6 +45,18 @@ public class Databaze{
 			return false;
 	}
 	
+	//Vyber ucitelu pro studenta
+	public int prirazeniUcitelu() {
+		int pocetUcitelu = 0;
+		for(Integer i: databaze.keySet()) {
+			if(databaze.get(i) instanceof Ucitel) {
+				System.out.println("ID: "+i+", prijmeni: "+databaze.get(i).getPrijmeni());
+				pocetUcitelu++;
+			}
+		}
+		return pocetUcitelu;
+	}
+	
 	// Ziskani ucitelu studenta
 	public void getUcitele(int id) {
 		List<Integer> temp = new ArrayList<Integer>();
@@ -197,6 +209,7 @@ public class Databaze{
 		}
 	}
 	
+	// Ziskani informaci o konkretni osobe podle ID
 	public void informaceOsoby(int id) {
 		if (databaze.containsKey(id)) {
 			System.out.println("Jmeno: "+databaze.get(id).getJmeno()+"\n"
@@ -209,7 +222,7 @@ public class Databaze{
 		}
 	}
 	
-	
+	// Vypis studentu konkretniho ucitele razenych podle prumeru
 	public void vypisStudentu(int id) {
 		if (databaze.containsKey(id) && databaze.get(id) instanceof Ucitel) {
 			ArrayList<Integer> tempArID = new ArrayList<Integer>();
@@ -225,6 +238,7 @@ public class Databaze{
 			System.out.println("Neco se pokazilo");
 	}
 	
+	// Celkove financni prostredky na pokryti jednoho mesice
 	public void financniProstredky() {
 		int hrubeMzdy = 0;
 		int stipendia = 0;

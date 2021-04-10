@@ -14,8 +14,23 @@ public class Test {
 		return cislo;
 	}
 	
+	public static int zadaniUcitelu(Scanner sc, int pocet) {
+		int pocetUcitelu = 0;
+		while(!sc.hasNextInt()) { // kontrola pro cele cislo
+            System.out.println("Zadejte prosim cele cislo pro pocet ucitelu:");
+            sc.next();
+		}
+		pocetUcitelu=sc.nextInt();
+		while(pocetUcitelu < 1 || pocetUcitelu > pocet) { // Pocet ucitelu musi byt minimalne 1 a maximalne pocet ucitelu z databaze
+			System.out.println("\nNeplatny pocet ucitelu!");
+			sc.nextLine();
+			pocetUcitelu = zadaniUcitelu(sc, pocet);
+		}
+		return pocetUcitelu;
+	}
+	
 	public static String korektniJmeno(Scanner sc) { // Metoda pro zadani spravneho jmena
-		while (!sc.hasNext("[A-Za-z]*")) {
+		while (!sc.hasNext("[A-Za-z]*")) { // Jmeno muze obsahovat pouze pismena abecedy
 	          System.out.println("Jmeno muze obsahovat pouze pismena: ");
 	          sc.next();
 	      }
@@ -52,7 +67,6 @@ public class Test {
 		databazeOsob.setUcitel("ucitelb", "ucitelb", 1978);
 		List<Integer> listUcitelu1 = new ArrayList<Integer>();
 		List<Integer> listUcitelu2 = new ArrayList<Integer>();
-		List<Integer> listUcitelu3 = new ArrayList<Integer>();
 		listUcitelu1.add(3);
 		listUcitelu2.add(1);
 		//listUcitelu2.add(3);
@@ -89,80 +103,94 @@ public class Test {
 					int role = 0;
 					sc=new Scanner(System.in);
 					boolean podminka = true;
-					System.out.println("Zvolte roli osoby: \n"
+					System.out.println("Zvolte roli osoby (nebo 0 pro navrat do hlavniho menu): \n"
 							 + "1 - student \n"
 							 + "2 - ucitel");
 					while(podminka) { // Dokud nebude spravne zvolena role, program bude stale zadat hodnoty pro roli
 						role=pouzeCelaCisla(sc);
-						if(role == 1 || role == 2)
+						if(role == 1 || role == 2 || role == 0)
 							podminka = false;
 						else
 							System.out.println("\nNevybral jste spravnou roli.");
 					}
-					System.out.println("Zadejte jmeno, prijmeni, rok narozeni: ");
-					String jmeno = korektniJmeno(sc);
-					String prijmeni = korektniJmeno(sc);
-					int rok = korektniRok(sc);
-					if(role == 1) {
-						List<Integer> listUcitelu = new ArrayList<Integer>();
-						System.out.println("Kolika ucitelum bude student prirazen: ");
-						int pocetUcitelu = pouzeCelaCisla(sc);
-						for(int i = 0; i < pocetUcitelu; i++) {
-							System.out.println("Zadejte ID ucitele: ");
-							id = pouzeCelaCisla(sc);
-							while(!databazeOsob.dbObsahujeUcitele(id)) {
-								System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
-								id=pouzeCelaCisla(sc);
-							}	
-							if(listUcitelu.contains(id)) {
-								System.out.println("Ucitel s timto ID je jiz prirazen.");
-								i--;
-							} else
-								listUcitelu.add(id);	
-						}
-						databazeOsob.setStudent(jmeno, prijmeni, rok, listUcitelu);
-					} else
-						databazeOsob.setUcitel(jmeno, prijmeni, rok);
+					if (role != 0) {
+						System.out.println("Zadejte jmeno, prijmeni, rok narozeni: ");
+						String jmeno = korektniJmeno(sc);
+						String prijmeni = korektniJmeno(sc);
+						int rok = korektniRok(sc);
+						if(role == 1) {
+							List<Integer> listUcitelu = new ArrayList<Integer>();
+							int pocet=databazeOsob.prirazeniUcitelu();
+							System.out.println("\nKolika ucitelum bude student prirazen: ");
+							int pocetUcitelu = zadaniUcitelu(sc, pocet);
+							for(int i = 0; i < pocetUcitelu; i++) {
+								System.out.println("Zadejte ID ucitele: ");
+								id = pouzeCelaCisla(sc);
+								while(!databazeOsob.dbObsahujeUcitele(id)) {
+									System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
+									id=pouzeCelaCisla(sc);
+								}	
+								if(listUcitelu.contains(id)) {
+									System.out.println("Ucitel s timto ID je jiz prirazen.");
+									i--;
+								} else
+									listUcitelu.add(id);	
+							}
+							databazeOsob.setStudent(jmeno, prijmeni, rok, listUcitelu);
+						} else
+							databazeOsob.setUcitel(jmeno, prijmeni, rok);
+					}
 					break;
 				case 2:
-					System.out.println("Zadejte ID studenta: ");
+					System.out.println("Zadejte ID studenta (nebo 0 pro navrat do hlavniho menu): ");
 					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeStudenta(id)) {
-						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
-						id=pouzeCelaCisla(sc);
+					if(id != 0) {
+						while(!databazeOsob.dbObsahujeStudenta(id) && id != 0) {
+							System.out.println("Student s timto ID neexistuje, zadejte prosim nove id (nebo 0): ");
+							id=pouzeCelaCisla(sc);
+						}
+						if (id != 0) {
+							System.out.println("Zadejte znamku studenta: ");
+							int znamka=pouzeCelaCisla(sc);
+							while(znamka < 1 || znamka >5) {
+								System.out.println("Zadejte znamku z rozsahu 1-5: ");
+								znamka=pouzeCelaCisla(sc);
+							}
+							databazeOsob.zadaniZnamek(id, znamka);
+						}
 					}
-					System.out.println("Zadejte znamku studenta: ");
-					int znamka=pouzeCelaCisla(sc);
-					while(znamka < 0 || znamka >5) {
-						System.out.println("Zadejte znamku z rozsahu 1-5: ");
-						znamka=pouzeCelaCisla(sc);
-					}
-					databazeOsob.zadaniZnamek(id, znamka);
 					break;
 				case 3:
-					System.out.println("Zadejte ID uzivatele: ");
+					System.out.println("Zadejte ID uzivatele (nebo 0 pro navrat do hlavniho menu): ");
 					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeUzivatele(id)) {
-						System.out.println("Uzivatel s timto ID neexistuje, zadejte prosim nove id: ");
-						id=pouzeCelaCisla(sc);
+					if(id != 0) {
+						while(!databazeOsob.dbObsahujeUzivatele(id) && id != 0) {
+							System.out.println("Uzivatel s timto ID neexistuje, zadejte prosim nove id: ");
+							id=pouzeCelaCisla(sc);
+						}
+						if(id != 0)
+							databazeOsob.smazaniOsoby(id);
 					}
-					databazeOsob.smazaniOsoby(id);
 					break;
 				case 4:
-					System.out.println("Zadejte ID studenta: ");
+					System.out.println("Zadejte ID studenta (nebo 0 pro navrat do hlavniho menu): ");
 					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeStudenta(id)) {
-						System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
-						id=pouzeCelaCisla(sc);
+					if(id != 0) {
+						while(!databazeOsob.dbObsahujeStudenta(id) && id != 0) {
+							System.out.println("Student s timto ID neexistuje, zadejte prosim nove id: ");
+							id=pouzeCelaCisla(sc);
+						}
+						if(id != 0)
+							databazeOsob.getUcitele(id);
 					}
-					databazeOsob.getUcitele(id);
 					break;
 				case 5:
 					podminka = true;
 					while(podminka) {
 						System.out.println("Zvolte prislusnou operaci:\n"
 								+ "p - pridat studenta\n"
-								+ "o - odebrat studenta\n");
+								+ "o - odebrat studenta\n"
+								+ "q - navrat do hlavniho menu");
 						String vyber = sc.next();
 						if(vyber.contains("p")) {
 							System.out.println("Zadejte ID ucitele a studenta: ");
@@ -192,31 +220,39 @@ public class Test {
 							}
 							databazeOsob.smazaniStudenta(id,idst);
 							podminka = false;
+						} else if (vyber.contains("q")) {
+							break;
 						} else {
-							System.out.println("Zvolte prosim 'p' pro pridani studenta nebo 'o' pro odebrani studenta");
+							System.out.println("Zvolte prosim 'p' pro pridani studenta nebo 'o' pro odebrani studenta nebo q pro navrat do hlavniho menu");
 						}
 					}
 					break;
 				case 6:
-					System.out.println("Zadejte ID uzivatele: ");
+					System.out.println("Zadejte ID uzivatele (nebo 0 pro navrat do hlavniho menu): ");
 					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeUzivatele(id)) {
-						System.out.println("Uzivatel s timto ID neexistuje, zadejte prosim nove id: ");
-						id=pouzeCelaCisla(sc);
+					if(id != 0) {
+						while(!databazeOsob.dbObsahujeUzivatele(id) && id != 0) {
+							System.out.println("Uzivatel s timto ID neexistuje, zadejte prosim nove id: ");
+							id=pouzeCelaCisla(sc);
+						}
+						if (id != 0)
+							databazeOsob.informaceOsoby(id);
 					}
-					databazeOsob.informaceOsoby(id);
 					break;
 				case 7:
 					databazeOsob.vypisUcitelu();
 					break;
 				case 8:
-					System.out.println("Zadejte ID ucitele: ");
+					System.out.println("Zadejte ID ucitele (nebo 0 pro navrat do hlavniho menu): ");
 					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeUcitele(id)) {
-						System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
-						id=pouzeCelaCisla(sc);
+					if (id != 0) {
+						while(!databazeOsob.dbObsahujeUcitele(id) && id != 0) {
+							System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
+							id=pouzeCelaCisla(sc);
+						}
+						if(id != 0)
+							databazeOsob.vypisStudentu(id);
 					}
-					databazeOsob.vypisStudentu(id);
 					break;
 				case 9:
 					databazeOsob.vypisOsob();

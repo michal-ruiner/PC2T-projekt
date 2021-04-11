@@ -8,7 +8,7 @@ public class DB_Connection {
 	
 	static Connection conn = null;
 	
-	public static void PripojeniKDatabazi(String nazevSouboru) {
+	public static Connection PripojeniKDatabazi(String nazevSouboru) {
         
 		String url = "jdbc:sqlite:database\\" + nazevSouboru;
         try {
@@ -20,6 +20,7 @@ public class DB_Connection {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return conn;
     }
 	
 	public static void OdpojeniOdDatabaze() {

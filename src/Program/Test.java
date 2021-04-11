@@ -1,3 +1,4 @@
+package Program;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
@@ -48,8 +49,8 @@ public class Test {
             sc.next();
 		}
 		rok=sc.nextInt();
-		while(rok < 1900 || rok > datum.getYear()) { // Dokud nebude spravne zvolen realny rok narozeni, program bude stale zadat hodnoty rok narozeni
-			System.out.println("\nNeplatny rok narozeni!");
+		while(rok < 1955 || rok > datum.getYear()) { // Dokud nebude spravne zvolen realny rok narozeni, program bude stale zadat hodnoty rok narozeni
+			System.out.println("\nNeplatny rok narozeni! Rok musi byt v rozmezi 1955-"+datum.getYear());
 			sc.nextLine();
 			rok = korektniRok(sc);
 		}
@@ -63,7 +64,7 @@ public class Test {
 		int volba;
 		int id = 0;
 		Databaze databazeOsob=new Databaze();
-		/*
+		
 		//****************************************************************** Testing users
 		databazeOsob.setUcitel("ucitelc", "ucitelc", 1978);
 		databazeOsob.setUcitel("ucitela", "ucitela", 1984);
@@ -78,7 +79,7 @@ public class Test {
 		databazeOsob.setStudent("studentc", "studentc", 1994, listUcitelu1);
 		databazeOsob.setStudent("student", "studentb", 2015, listUcitelu2);
 		//******************************************************************
-		 */
+		 
 		while(run) {
 			System.out.println("\n****Zvolte prosim moznost****");
 			System.out.println("1) Pridani nove osoby \n"
@@ -93,7 +94,7 @@ public class Test {
 							 + "10) Potrebne financni prostredky\n"
 							 + "11) Pripojeni k SQL databazi\n"
 							 //+ "12)\n"
-							 //+ "13)\n"
+							 + "13) Ulozeni udaju do databaze\n"
 							 //+ "14)\n"
 							 //+ "15)\n"
 							 + "16) Ukonceni aplikace\n"
@@ -282,6 +283,9 @@ public class Test {
 					      System.out.println("Doslo k chybe.");
 					      e.printStackTrace();
 					    }
+					break;
+				case 13:
+					databazeOsob.ulozeniDatabaze();
 					break;
 				case 16:
 					run = false;

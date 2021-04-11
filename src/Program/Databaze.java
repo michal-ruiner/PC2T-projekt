@@ -1,3 +1,4 @@
+package Program;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -5,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import SQLdb.DB_Connection;
+import SQLdb.DB_Save;
 
 public class Databaze{
 	private HashMap<Integer, Osoba> databaze;
@@ -263,6 +265,24 @@ public class Databaze{
 	public void pripojeniDatabaze(String nazevSouboru) {
 		DB_Connection.PripojeniKDatabazi(nazevSouboru);
 		DB_Connection.OdpojeniOdDatabaze();
+	}
+	
+	public void ulozeniDatabaze() {
+		DB_Save.vytvoreniHlavniTabulky();
+		DB_Save.vytvoreniSkupin();
+		DB_Save zaznam = new DB_Save();
+		int pocet = 0;
+		for(Integer i : databaze.keySet()) {
+			zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), (databaze.get(i) instanceof Student) ? 1 : 2);
+			DB_Save.vlozeniListuOsob(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel");
+			DB_Save.pridaniOsobDoListu(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", databaze.get(i).vypisOsob());
+			if(databaze.get(i) instanceof Student) {
+				DB_Save.vlozeniListuZnamek(databaze.get(i).getID());
+				DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList());
+			}
+			pocet++;
+		}
+		System.out.println("Zapis do databaze uspesne proveden, celkove zapsano "+pocet+" uzivatelu.");
 	}
 	//************************************************
 	

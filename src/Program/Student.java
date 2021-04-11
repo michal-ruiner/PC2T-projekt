@@ -1,3 +1,4 @@
+package Program;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class Student extends Osoba implements Comparable<Student> {
 
 	public void getZnamky() {
 		System.out.println("Znamky studenta: "+znamky);
+	}
+	
+	public List<Integer> getZnamkyList() {
+		return znamky;
 	}
 
 	public void setZnamky(int znamka) {

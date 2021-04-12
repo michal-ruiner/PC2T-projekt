@@ -14,7 +14,7 @@ public class DB_Save {
                 + "jmeno TEXT NOT NULL,\n"
                 + "prijmeni TEXT NOT NULL,\n"
                 + "rok INTEGER NOT NULL,\n"
-                + "financni_ohodnoceni[CZK] INTEGER,\n"
+                + "`financni_ohodnoceni[CZK]` INTEGER,\n"
                 + "skupina_id INTEGER NOT NULL,\n"
                 + "FOREIGN KEY (skupina_id) REFERENCES skupina_uzivatelu (skupina_id)"
                 + ");";
@@ -53,7 +53,7 @@ public class DB_Save {
 	public void vlozeniUzivatele(int id, String jmeno, String prijmeni, int rok, int finance, int skupina, String nazevDatabaze) {
 	    
 		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
-	    String insertUser = "INSERT INTO uzivatele (id,jmeno,prijmeni,rok,financni_ohodnoceni,skupina_id) VALUES(?,?,?,?,?,?)";
+	    String insertUser = "INSERT INTO uzivatele (id,jmeno,prijmeni,rok,`financni_ohodnoceni[CZK]`,skupina_id) VALUES(?,?,?,?,?,?)";
 
 	    try (PreparedStatement prStmt = conn.prepareStatement(insertUser)) {
 	      prStmt.setInt(1, id);
@@ -73,41 +73,78 @@ public class DB_Save {
         }
 	 }
 	
-	public static void vlozeniListuOsob(int id, String osoba, String nazevDatabaze) {
+	public static void vlozeniListuOsobStudenta(int id, String osoba, String nazevDatabaze) {
 		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 		
 		String tabulkaOsob = "CREATE TABLE IF NOT EXISTS "+osoba+id+" (\n"
-				 + "id_osoby INTEGER PRIMARY KEY,\n"
-				 + "id_uzivatele INTEGER NOT NULL"
+				 + "id_ucitele INTEGER PRIMARY KEY"
 				 + ");";
 
 	    try {
 	      Statement stmt = conn.createStatement();
 	      stmt.execute(tabulkaOsob);
-	      System.out.println("Novy list osob byl vlozen do databaze!");
+	      System.out.println("Novy list osob studenta byl vlozen do databaze!");
 	    } catch (SQLException e) {
-	      System.out.println("List osob uzivatele "+id+" jiz existuje");
+	      System.out.println("List osob studenta "+id+" jiz existuje");
 	      //e.printStackTrace();
 	    } finally {
         	DB_Connection.OdpojeniOdDatabaze();
         }
 	}
 	
-	public static void pridaniOsobDoListu(int id, String osoba, List<Integer> listOsob, String nazevDatabaze) {
+	public static void vlozeniListuOsobUcitele(int id, String osoba, String nazevDatabaze) {
 		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 		
-	    String insertList = "INSERT INTO "+osoba+id+" (id_osoby,id_uzivatele) VALUES(?,?)";
+		String tabulkaOsob = "CREATE TABLE IF NOT EXISTS "+osoba+id+" (\n"
+				 + "id_studenta INTEGER PRIMARY KEY"
+				 + ");";
+
+	    try {
+	      Statement stmt = conn.createStatement();
+	      stmt.execute(tabulkaOsob);
+	      System.out.println("Novy list osob ucitele byl vlozen do databaze!");
+	    } catch (SQLException e) {
+	      System.out.println("List osob ucitele "+id+" jiz existuje");
+	      //e.printStackTrace();
+	    } finally {
+        	DB_Connection.OdpojeniOdDatabaze();
+        }
+	}
+	
+	public static void pridaniOsobDoListuStudenta(int id, String osoba, List<Integer> listOsob, String nazevDatabaze) {
+		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
+		
+	    String insertList = "INSERT INTO "+osoba+id+" (id_ucitele) VALUES(?)";
 
 	    try {
 	      PreparedStatement prStmt = conn.prepareStatement(insertList);
 	      for (int i = 0; i < listOsob.size();i++) {
 	    	  prStmt.setInt(1, listOsob.get(i));
-	    	  prStmt.setInt(2, id);
 	    	  
 	    	  prStmt.executeUpdate();
 	      }
 	    } catch (SQLException e) {
-	      System.out.println("Nebylo mozne zapsat osoby.");
+	      System.out.println("Nebylo mozne zapsat ucitele.");
+	      //e.printStackTrace();
+	    } finally {
+        	DB_Connection.OdpojeniOdDatabaze();
+        }
+	}
+	
+	public static void pridaniOsobDoListuUcitele(int id, String osoba, List<Integer> listOsob, String nazevDatabaze) {
+		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
+		
+	    String insertList = "INSERT INTO "+osoba+id+" (id_studenta) VALUES(?)";
+
+	    try {
+	      PreparedStatement prStmt = conn.prepareStatement(insertList);
+	      for (int i = 0; i < listOsob.size();i++) {
+	    	  prStmt.setInt(1, listOsob.get(i));
+	    	  
+	    	  prStmt.executeUpdate();
+	      }
+	    } catch (SQLException e) {
+	      System.out.println("Nebylo mozne zapsat studenty.");
 	      //e.printStackTrace();
 	    } finally {
         	DB_Connection.OdpojeniOdDatabaze();

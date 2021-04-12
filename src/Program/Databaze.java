@@ -262,23 +262,25 @@ public class Databaze{
 	}
 	
 	//************************************************ SQL cast
-	public void pripojeniDatabaze(String nazevSouboru) {
-		DB_Connection.PripojeniKDatabazi(nazevSouboru);
+	public void pripojeniDatabaze(String nazevDatabaze) {
+		DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 		DB_Connection.OdpojeniOdDatabaze();
 	}
 	
-	public void ulozeniDatabaze() {
-		DB_Save.vytvoreniHlavniTabulky();
-		DB_Save.vytvoreniSkupin();
+	public void ulozeniDatabaze(String nazevDatabaze) {
+		DB_Save.vytvoreniHlavniTabulky(nazevDatabaze);
+		DB_Save.vytvoreniSkupin(nazevDatabaze);
 		DB_Save zaznam = new DB_Save();
 		int pocet = 0;
 		for(Integer i : databaze.keySet()) {
-			zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), (databaze.get(i) instanceof Student) ? 1 : 2);
-			DB_Save.vlozeniListuOsob(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel");
-			DB_Save.pridaniOsobDoListu(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", databaze.get(i).vypisOsob());
-			if(databaze.get(i) instanceof Student) {
-				DB_Save.vlozeniListuZnamek(databaze.get(i).getID());
-				DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList());
+			zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), (databaze.get(i) instanceof Student) ? 1 : 2, nazevDatabaze);
+			if(databaze.get(i).vypisOsob().size() > 0) {
+				DB_Save.vlozeniListuOsob(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", nazevDatabaze);
+				DB_Save.pridaniOsobDoListu(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", databaze.get(i).vypisOsob(), nazevDatabaze);
+			}
+			if(databaze.get(i) instanceof Student && ((Student)databaze.get(i)).getZnamkyList().size()>0) {
+				DB_Save.vlozeniListuZnamek(databaze.get(i).getID(), nazevDatabaze);
+				DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList(), nazevDatabaze);
 			}
 			pocet++;
 		}

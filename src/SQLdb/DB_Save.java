@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class DB_Save {
-	public static void vytvoreniHlavniTabulky() {
+	public static void vytvoreniHlavniTabulky(String nazevDatabaze) {
 		
 		String tabulkaUzivatelu = "CREATE TABLE IF NOT EXISTS uzivatele (\n"
                 + "id INTEGER PRIMARY KEY,\n"
@@ -19,7 +19,7 @@ public class DB_Save {
                 + ");";
 		
 		try {
-			Connection conn = DB_Connection.PripojeniKDatabazi("DBosob.db");
+			Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 			Statement stmt = conn.createStatement();
 			stmt.execute(tabulkaUzivatelu);
 		} catch (SQLException e) {
@@ -29,7 +29,7 @@ public class DB_Save {
         }
 	}
 	
-	public static void vytvoreniSkupin() {
+	public static void vytvoreniSkupin(String nazevDatabaze) {
 		String tabulkaSkupin = "CREATE TABLE IF NOT EXISTS skupina_uzivatelu (\n"
 				 + "skupina_id INTEGER PRIMARY KEY,\n"
 				 + "nazev_skupiny TEXT NOT NULL"
@@ -38,7 +38,7 @@ public class DB_Save {
 		String zadaniSkupin = "INSERT INTO skupina_uzivatelu (skupina_id,nazev_skupiny)\n"
 						+ "VALUES (1,'Student'),(2,'Ucitel');";
 		try {
-			Connection conn = DB_Connection.PripojeniKDatabazi("DBosob.db");
+			Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 			Statement stmt = conn.createStatement();
 			stmt.execute(tabulkaSkupin);
 			stmt.execute(zadaniSkupin);
@@ -49,9 +49,9 @@ public class DB_Save {
         }
 	}
 	
-	public void vlozeniUzivatele(int id, String jmeno, String prijmeni, int rok, int skupina) {
+	public void vlozeniUzivatele(int id, String jmeno, String prijmeni, int rok, int skupina, String nazevDatabaze) {
 	    
-		Connection conn = DB_Connection.PripojeniKDatabazi("DBosob.db");
+		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 	    String insertUser = "INSERT INTO uzivatele (id,jmeno,prijmeni,rok,skupina_id) VALUES(?,?,?,?,?)";
 
 	    try (PreparedStatement prStmt = conn.prepareStatement(insertUser)) {
@@ -71,8 +71,8 @@ public class DB_Save {
         }
 	 }
 	
-	public static void vlozeniListuOsob(int id, String osoba) {
-		Connection conn = DB_Connection.PripojeniKDatabazi("DBosob.db");
+	public static void vlozeniListuOsob(int id, String osoba, String nazevDatabaze) {
+		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 		
 		String tabulkaOsob = "CREATE TABLE IF NOT EXISTS "+osoba+id+" (\n"
 				 + "id_osoby INTEGER PRIMARY KEY,\n"
@@ -91,8 +91,8 @@ public class DB_Save {
         }
 	}
 	
-	public static void pridaniOsobDoListu(int id, String osoba, List<Integer> listOsob) {
-		Connection conn = DB_Connection.PripojeniKDatabazi("DBosob.db");
+	public static void pridaniOsobDoListu(int id, String osoba, List<Integer> listOsob, String nazevDatabaze) {
+		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 		
 	    String insertList = "INSERT INTO "+osoba+id+" (id_osoby,id_uzivatele) VALUES(?,?)";
 
@@ -112,8 +112,8 @@ public class DB_Save {
         }
 	}
 	
-	public static void vlozeniListuZnamek(int id) {
-		Connection conn = DB_Connection.PripojeniKDatabazi("DBosob.db");
+	public static void vlozeniListuZnamek(int id, String nazevDatabaze) {
+		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 		
 		String tabulkaZnamek = "CREATE TABLE IF NOT EXISTS ZnamkyStudenta"+id+" (\n"
 				 + "znamka INTEGER NOT NULL\n"
@@ -131,8 +131,8 @@ public class DB_Save {
         }
 	}
 	
-	public static void pridaniZnamekDoListu(int id, List<Integer> listZnamek) {
-		Connection conn = DB_Connection.PripojeniKDatabazi("DBosob.db");
+	public static void pridaniZnamekDoListu(int id, List<Integer> listZnamek, String nazevDatabaze) {
+		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
 		
 	    String insertList = "INSERT INTO ZnamkyStudenta"+id+" (znamka) VALUES(?)";
 

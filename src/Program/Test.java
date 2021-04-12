@@ -285,7 +285,19 @@ public class Test {
 					    }
 					break;
 				case 13:
-					databazeOsob.ulozeniDatabaze();
+					try {
+					      File soubor = new File("name.txt");
+					      Scanner cteniSouboru = new Scanner(soubor);
+					      String nazevSouboru = cteniSouboru.nextLine();
+					      cteniSouboru.close();
+					      File databaze = new File("database\\"+nazevSouboru);
+					      if(databaze.exists())
+					    	  databaze.delete();
+					      databazeOsob.ulozeniDatabaze(nazevSouboru);
+					    } catch (FileNotFoundException e) {
+					      System.out.println("Doslo k chybe.");
+					      e.printStackTrace();
+					    }
 					break;
 				case 16:
 					run = false;

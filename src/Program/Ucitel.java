@@ -23,7 +23,7 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 		return hrubaMzda;
 	}
 	
-	public float vypocetCisteMzdy() {
+	public int vypocetCisteMzdy() {
 		int hrubaMzda = vypocetHrubeMzdy();
 		float cistaMzda = 0;
 		cistaMzda = (float)(hrubaMzda - ((hrubaMzda*0.065)+(hrubaMzda*0.045)));
@@ -33,7 +33,7 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 		cistaMzda-=dan;
 		if(hrubaMzda*0.15 > 2320)
 			cistaMzda+=2320;
-		return cistaMzda;
+		return (int)cistaMzda;
 	}
 
 	public void setPocetStudentuSeStipendiem(int a) {
@@ -66,6 +66,6 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 	
 	@Override
     public String toString() {
-		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", cista mzda: "+vypocetCisteMzdy();
+		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", cista mzda: "+vypocetCisteMzdy()+" CZK";
     }
 }

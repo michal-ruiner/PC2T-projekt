@@ -67,7 +67,7 @@ public class Student extends Osoba implements Comparable<Student> {
 	
 	@Override
     public String toString() {
-        return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", stipendium: "+stipendiumStudenta;
+        return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", stipendium: "+stipendiumStudenta+" CZK";
     }
 
 	@Override

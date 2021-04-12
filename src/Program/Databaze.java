@@ -273,7 +273,7 @@ public class Databaze{
 		DB_Save zaznam = new DB_Save();
 		int pocet = 0;
 		for(Integer i : databaze.keySet()) {
-			zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), (databaze.get(i) instanceof Student) ? 1 : 2, nazevDatabaze);
+			zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), (databaze.get(i) instanceof Student) ? (((Student)databaze.get(i)).getStipendium()) : (((Ucitel)databaze.get(i)).vypocetCisteMzdy()), (databaze.get(i) instanceof Student) ? 1 : 2, nazevDatabaze);
 			if(databaze.get(i).vypisOsob().size() > 0) {
 				DB_Save.vlozeniListuOsob(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", nazevDatabaze);
 				DB_Save.pridaniOsobDoListu(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", databaze.get(i).vypisOsob(), nazevDatabaze);

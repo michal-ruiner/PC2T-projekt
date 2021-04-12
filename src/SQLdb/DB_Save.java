@@ -14,6 +14,7 @@ public class DB_Save {
                 + "jmeno TEXT NOT NULL,\n"
                 + "prijmeni TEXT NOT NULL,\n"
                 + "rok INTEGER NOT NULL,\n"
+                + "financni_ohodnoceni[CZK] INTEGER,\n"
                 + "skupina_id INTEGER NOT NULL,\n"
                 + "FOREIGN KEY (skupina_id) REFERENCES skupina_uzivatelu (skupina_id)"
                 + ");";
@@ -49,17 +50,18 @@ public class DB_Save {
         }
 	}
 	
-	public void vlozeniUzivatele(int id, String jmeno, String prijmeni, int rok, int skupina, String nazevDatabaze) {
+	public void vlozeniUzivatele(int id, String jmeno, String prijmeni, int rok, int finance, int skupina, String nazevDatabaze) {
 	    
 		Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
-	    String insertUser = "INSERT INTO uzivatele (id,jmeno,prijmeni,rok,skupina_id) VALUES(?,?,?,?,?)";
+	    String insertUser = "INSERT INTO uzivatele (id,jmeno,prijmeni,rok,financni_ohodnoceni,skupina_id) VALUES(?,?,?,?,?,?)";
 
 	    try (PreparedStatement prStmt = conn.prepareStatement(insertUser)) {
 	      prStmt.setInt(1, id);
 	      prStmt.setString(2, jmeno);
 	      prStmt.setString(3, prijmeni);
 	      prStmt.setInt(4, rok);
-	      prStmt.setInt(5, skupina);
+	      prStmt.setInt(5, finance);
+	      prStmt.setInt(6, skupina);
 
 	      prStmt.executeUpdate();
 	      System.out.println("Novy uzivatel byl vlozen do databaze!");

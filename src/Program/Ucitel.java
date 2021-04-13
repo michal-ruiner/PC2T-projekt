@@ -36,7 +36,7 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 	}
 	
 	public int getCistaMzda() {
-		vypocetCisteMzdy();
+		//vypocetCisteMzdy();
 		return (int)cistaMzda;
 	}
 	

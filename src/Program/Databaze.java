@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import SQLdb.DB_Connection;
+import SQLdb.DB_Delete;
 import SQLdb.DB_Load;
 import SQLdb.DB_Save;
 
@@ -301,6 +302,10 @@ public class Databaze{
 		db=null;
 		db=DB_Load.nacteniUzivatelu(nazevSouboru);
 		return db;
+	}
+	
+	public void smazaniOsobyZDatabaze(int id, String nazevSouboru) {
+		DB_Delete.smazaniOsoby(id, nazevSouboru);
 	}
 	//************************************************
 	

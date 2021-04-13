@@ -66,7 +66,7 @@ public class Test {
 		Databaze databazeOsob=new Databaze();
 		
 		//****************************************************************** Testing users
-		/*databazeOsob.setUcitel("ucitelc", "ucitelc", 1978);
+		databazeOsob.setUcitel("ucitelc", "ucitelc", 1978);
 		databazeOsob.setUcitel("ucitela", "ucitela", 1984);
 		databazeOsob.setUcitel("ucitelb", "ucitelb", 1978);
 		List<Integer> listUcitelu1 = new ArrayList<Integer>();
@@ -77,7 +77,12 @@ public class Test {
 		databazeOsob.setStudent("studentb", "studentb", 2015, listUcitelu2);
 		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);
 		databazeOsob.setStudent("studentc", "studentc", 1994, listUcitelu1);
-		databazeOsob.setStudent("student", "studentb", 2015, listUcitelu2);*/
+		databazeOsob.setStudent("student", "studentb", 2015, listUcitelu2);
+		databazeOsob.zadaniZnamek(4, 1);
+		databazeOsob.zadaniZnamek(4, 3);
+		databazeOsob.zadaniZnamek(6, 1);
+		databazeOsob.zadaniZnamek(6, 1);
+		databazeOsob.zadaniZnamek(6, 2);
 		//******************************************************************
 		 
 		while(run) {

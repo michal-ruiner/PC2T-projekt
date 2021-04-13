@@ -66,7 +66,7 @@ public class Test {
 		Databaze databazeOsob=new Databaze();
 		
 		//****************************************************************** Testing users
-		databazeOsob.setUcitel("ucitelc", "ucitelc", 1978);
+		/*databazeOsob.setUcitel("ucitelc", "ucitelc", 1978);
 		databazeOsob.setUcitel("ucitela", "ucitela", 1984);
 		databazeOsob.setUcitel("ucitelb", "ucitelb", 1978);
 		List<Integer> listUcitelu1 = new ArrayList<Integer>();
@@ -77,7 +77,7 @@ public class Test {
 		databazeOsob.setStudent("studentb", "studentb", 2015, listUcitelu2);
 		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);
 		databazeOsob.setStudent("studentc", "studentc", 1994, listUcitelu1);
-		databazeOsob.setStudent("student", "studentb", 2015, listUcitelu2);
+		databazeOsob.setStudent("student", "studentb", 2015, listUcitelu2);*/
 		//******************************************************************
 		 
 		while(run) {
@@ -93,7 +93,7 @@ public class Test {
 							 + "9) Vypis osob v kategoriich abecedne (podle prijmeni)\n"
 							 + "10) Potrebne financni prostredky\n"
 							 + "11) Pripojeni k SQL databazi\n"
-							 //+ "12)\n"
+							 + "12) Nacteni udaju z databaze\n"
 							 + "13) Ulozeni udaju do databaze\n"
 							 //+ "14)\n"
 							 //+ "15)\n"
@@ -279,6 +279,18 @@ public class Test {
 					      String nazevSouboru = cteniSouboru.nextLine();
 					      cteniSouboru.close();
 					      databazeOsob.pripojeniDatabaze(nazevSouboru);
+					    } catch (FileNotFoundException e) {
+					      System.out.println("Doslo k chybe.");
+					      e.printStackTrace();
+					    }
+					break;
+				case 12:
+					try {
+					      File soubor = new File("name.txt");
+					      Scanner cteniSouboru = new Scanner(soubor);
+					      String nazevSouboru = cteniSouboru.nextLine();
+					      cteniSouboru.close();
+					      databazeOsob=databazeOsob.nacteniDatabaze(databazeOsob, nazevSouboru);
 					    } catch (FileNotFoundException e) {
 					      System.out.println("Doslo k chybe.");
 					      e.printStackTrace();

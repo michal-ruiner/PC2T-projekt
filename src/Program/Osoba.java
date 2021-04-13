@@ -49,6 +49,10 @@ public abstract class Osoba {
 		return keyID;
 	}
 	
+	public static void setKeyID(int key) {
+		keyID=key;
+	}
+	
 	//*******************************************************
 
 	protected abstract List<Integer> vypisOsob();

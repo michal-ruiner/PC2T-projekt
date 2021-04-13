@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import SQLdb.DB_Connection;
+import SQLdb.DB_Load;
 import SQLdb.DB_Save;
 
 public class Databaze{
@@ -226,7 +227,7 @@ public class Databaze{
 			if(databaze.get(id) instanceof Student)
 				System.out.println("Financni ohodnoceni (stipendium): "+((Student)databaze.get(id)).getStipendium()+" CZK");
 			else		
-				System.out.println("Financni ohodnoceni (cista mzda): "+((Ucitel)databaze.get(id)).vypocetCisteMzdy()+" CZK");
+				System.out.println("Financni ohodnoceni (cista mzda): "+((Ucitel)databaze.get(id)).getCistaMzda()+" CZK");
 		}
 	}
 	
@@ -275,20 +276,26 @@ public class Databaze{
 		for(Integer i : databaze.keySet()) {
 			if(databaze.get(i) instanceof Student) {
 				zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), ((Student)databaze.get(i)).getStipendium(), 1, nazevDatabaze);
-				if(((Student)databaze.get(i)).getZnamkyList().size()>0) {
+				/*if(((Student)databaze.get(i)).getZnamkyList().size()>0) {
 					DB_Save.vlozeniListuZnamek(databaze.get(i).getID(), nazevDatabaze);
 					DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList(), nazevDatabaze);
 				}
 				if(databaze.get(i).vypisOsob().size() > 0) {
 					DB_Save.vlozeniListuOsobStudenta(databaze.get(i).getID(), "Student", nazevDatabaze);
 					DB_Save.pridaniOsobDoListuStudenta(databaze.get(i).getID(), "Student", databaze.get(i).vypisOsob(), nazevDatabaze);
-				}
+				}*/
+				DB_Save.vlozeniListuZnamek(databaze.get(i).getID(), nazevDatabaze);
+				DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList(), nazevDatabaze);
+				DB_Save.vlozeniListuOsobStudenta(databaze.get(i).getID(), "Student", nazevDatabaze);
+				DB_Save.pridaniOsobDoListuStudenta(databaze.get(i).getID(), "Student", databaze.get(i).vypisOsob(), nazevDatabaze);
 			} else {
-				zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), ((Ucitel)databaze.get(i)).vypocetCisteMzdy(), 2, nazevDatabaze);
-				if(databaze.get(i).vypisOsob().size() > 0) {
+				zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), ((Ucitel)databaze.get(i)).getCistaMzda(), 2, nazevDatabaze);
+				/*if(databaze.get(i).vypisOsob().size() > 0) {
 					DB_Save.vlozeniListuOsobUcitele(databaze.get(i).getID(), "Ucitel", nazevDatabaze);
 					DB_Save.pridaniOsobDoListuUcitele(databaze.get(i).getID(), "Ucitel", databaze.get(i).vypisOsob(), nazevDatabaze);
-				}
+				}*/
+				DB_Save.vlozeniListuOsobUcitele(databaze.get(i).getID(), "Ucitel", nazevDatabaze);
+				DB_Save.pridaniOsobDoListuUcitele(databaze.get(i).getID(), "Ucitel", databaze.get(i).vypisOsob(), nazevDatabaze);
 			}
 			/*zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), (databaze.get(i) instanceof Student) ? (((Student)databaze.get(i)).getStipendium()) : (((Ucitel)databaze.get(i)).vypocetCisteMzdy()), (databaze.get(i) instanceof Student) ? 1 : 2, nazevDatabaze);
 			if(databaze.get(i).vypisOsob().size() > 0) {
@@ -302,6 +309,13 @@ public class Databaze{
 			pocet++;
 		}
 		System.out.println("Zapis do databaze uspesne proveden, celkove zapsano "+pocet+" uzivatelu.");
+	}
+	
+	public Databaze nacteniDatabaze(Databaze db, String nazevSouboru) {
+		Osoba.setKeyID(1);
+		db=null;
+		db=DB_Load.nacteniUzivatelu(nazevSouboru);
+		return db;
 	}
 	//************************************************
 	

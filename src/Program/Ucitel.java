@@ -6,6 +6,7 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 	final int studentPenize = 2000;
 	final int stipendiumOdmena = 500;
 	private int pocetStudentuSeStipendiem = 0;
+	private float cistaMzda = 0;
 	List<Integer> studenti;
 	
 	public Ucitel(String jmeno, String prijmeni, int rok) {
@@ -23,18 +24,22 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 		return hrubaMzda;
 	}
 	
-	public int vypocetCisteMzdy() {
+	public void vypocetCisteMzdy() {
 		int hrubaMzda = vypocetHrubeMzdy();
-		float cistaMzda = 0;
-		cistaMzda = (float)(hrubaMzda - ((hrubaMzda*0.065)+(hrubaMzda*0.045)));
+		this.cistaMzda = (float)(hrubaMzda - ((hrubaMzda*0.065)+(hrubaMzda*0.045)));
 		double dan = hrubaMzda*0.15;
 		if (dan <= 2320)
 			dan = 0;
-		cistaMzda-=dan;
+		this.cistaMzda-=dan;
 		if(hrubaMzda*0.15 > 2320)
-			cistaMzda+=2320;
+			this.cistaMzda+=2320;
+	}
+	
+	public int getCistaMzda() {
+		vypocetCisteMzdy();
 		return (int)cistaMzda;
 	}
+	
 
 	public void setPocetStudentuSeStipendiem(int a) {
 		this.pocetStudentuSeStipendiem+=a;
@@ -66,6 +71,6 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 	
 	@Override
     public String toString() {
-		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", cista mzda: "+vypocetCisteMzdy()+" CZK";
+		return "ID: "+getID()+", prijmeni: "+getPrijmeni()+", jmeno: "+getJmeno()+", rok narozeni: "+getRok()+", cista mzda: "+getCistaMzda()+" CZK";
     }
 }

@@ -101,7 +101,7 @@ public class Test {
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"
 							 + "18) Vypis znamek\n"
-							 + "19) testing purpose");
+							 + "19) Existuje tabulka v SQL db?");
 			volba=pouzeCelaCisla(sc);
 			switch(volba) {
 				case 1:
@@ -326,15 +326,18 @@ public class Test {
 					}
 					databazeOsob.ziskaniZnamek(id);
 					break;
-				case 19:
-					System.out.println("Zadejte ID ucitele: ");
-					id = pouzeCelaCisla(sc);
-					while(!databazeOsob.dbObsahujeUcitele(id)) {
-						System.out.println("Ucitel s timto ID neexistuje, zadejte prosim nove id: ");
-						id=pouzeCelaCisla(sc);
+				/*case 19:
+					try {
+					      File soubor = new File("name.txt");
+					      Scanner cteniSouboru = new Scanner(soubor);
+					      String nazevSouboru = cteniSouboru.nextLine();
+					      cteniSouboru.close();
+					      databazeOsob.tableExist(nazevSouboru);
+					    } catch (FileNotFoundException e) {
+					      System.out.println("Doslo k chybe.");
+					      e.printStackTrace();
 					}
-					databazeOsob.getStudenti(id);
-					break;
+					break;*/
 			}
 		}
 	}

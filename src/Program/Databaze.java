@@ -276,36 +276,21 @@ public class Databaze{
 		for(Integer i : databaze.keySet()) {
 			if(databaze.get(i) instanceof Student) {
 				zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), ((Student)databaze.get(i)).getStipendium(), 1, nazevDatabaze);
-				/*if(((Student)databaze.get(i)).getZnamkyList().size()>0) {
+				if(((Student)databaze.get(i)).getZnamkyList().size()>0) {
 					DB_Save.vlozeniListuZnamek(databaze.get(i).getID(), nazevDatabaze);
 					DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList(), nazevDatabaze);
 				}
 				if(databaze.get(i).vypisOsob().size() > 0) {
 					DB_Save.vlozeniListuOsobStudenta(databaze.get(i).getID(), "Student", nazevDatabaze);
 					DB_Save.pridaniOsobDoListuStudenta(databaze.get(i).getID(), "Student", databaze.get(i).vypisOsob(), nazevDatabaze);
-				}*/
-				DB_Save.vlozeniListuZnamek(databaze.get(i).getID(), nazevDatabaze);
-				DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList(), nazevDatabaze);
-				DB_Save.vlozeniListuOsobStudenta(databaze.get(i).getID(), "Student", nazevDatabaze);
-				DB_Save.pridaniOsobDoListuStudenta(databaze.get(i).getID(), "Student", databaze.get(i).vypisOsob(), nazevDatabaze);
+				}
 			} else {
 				zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), ((Ucitel)databaze.get(i)).getCistaMzda(), 2, nazevDatabaze);
-				/*if(databaze.get(i).vypisOsob().size() > 0) {
+				if(databaze.get(i).vypisOsob().size() > 0) {
 					DB_Save.vlozeniListuOsobUcitele(databaze.get(i).getID(), "Ucitel", nazevDatabaze);
 					DB_Save.pridaniOsobDoListuUcitele(databaze.get(i).getID(), "Ucitel", databaze.get(i).vypisOsob(), nazevDatabaze);
-				}*/
-				DB_Save.vlozeniListuOsobUcitele(databaze.get(i).getID(), "Ucitel", nazevDatabaze);
-				DB_Save.pridaniOsobDoListuUcitele(databaze.get(i).getID(), "Ucitel", databaze.get(i).vypisOsob(), nazevDatabaze);
+				}
 			}
-			/*zaznam.vlozeniUzivatele(databaze.get(i).getID(), databaze.get(i).getJmeno(), databaze.get(i).getPrijmeni(), databaze.get(i).getRok(), (databaze.get(i) instanceof Student) ? (((Student)databaze.get(i)).getStipendium()) : (((Ucitel)databaze.get(i)).vypocetCisteMzdy()), (databaze.get(i) instanceof Student) ? 1 : 2, nazevDatabaze);
-			if(databaze.get(i).vypisOsob().size() > 0) {
-				DB_Save.vlozeniListuOsob(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", nazevDatabaze);
-				DB_Save.pridaniOsobDoListu(databaze.get(i).getID(), (databaze.get(i) instanceof Student) ? "Student" : "Ucitel", databaze.get(i).vypisOsob(), nazevDatabaze);
-			}
-			if(databaze.get(i) instanceof Student && ((Student)databaze.get(i)).getZnamkyList().size()>0) {
-				DB_Save.vlozeniListuZnamek(databaze.get(i).getID(), nazevDatabaze);
-				DB_Save.pridaniZnamekDoListu(databaze.get(i).getID(), ((Student)databaze.get(i)).getZnamkyList(), nazevDatabaze);
-			}*/
 			pocet++;
 		}
 		System.out.println("Zapis do databaze uspesne proveden, celkove zapsano "+pocet+" uzivatelu.");

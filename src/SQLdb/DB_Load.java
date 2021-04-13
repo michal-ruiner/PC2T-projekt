@@ -24,9 +24,13 @@ public class DB_Load {
                 	databazeNew.setUcitel(data.getString("jmeno"), data.getString("prijmeni"), data.getInt("rok"));
                 } else {
                 	databazeNew.setStudent(data.getString("jmeno"), data.getString("prijmeni"), data.getInt("rok"), uciteleStudenta(data.getInt("id"), conn));
-                	List<Integer> tempZnamky = new ArrayList<Integer>(znamkyStudenta(data.getInt("id"), conn));
-                	for(int i=0; i<tempZnamky.size();i++)
-                		databazeNew.zadaniZnamek(data.getInt("id"), tempZnamky.get(i));
+                	String asd = ("ZnamkyStudenta"+data.getInt("id"));
+                	System.out.println(asd);
+                	if(existujeTabulka(asd, conn)) {
+                		List<Integer> tempZnamky = new ArrayList<Integer>(znamkyStudenta(data.getInt("id"), conn));
+                		for(int i=0; i<tempZnamky.size();i++)
+                			databazeNew.zadaniZnamek(data.getInt("id"), tempZnamky.get(i));
+                	}
                 }
             }
 			
@@ -66,6 +70,21 @@ public class DB_Load {
 				e.printStackTrace();
 			}
 			return tempZnamky;
+		}
+		
+		public static boolean existujeTabulka(String nazevTabulky, Connection conn) {
+			int exist = 0;
+			String tabulka = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='"+nazevTabulky+"';";
+			try {
+				Statement stmt = conn.createStatement();
+				exist = stmt.executeQuery(tabulka).getInt(1);       	
+			} catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+			if (exist == 0)
+				return false;
+			else
+				return true;
 		}
 		
 		/*public static List<Integer> studentiUcitele(int id, Connection conn) {

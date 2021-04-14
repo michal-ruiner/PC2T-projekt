@@ -64,9 +64,9 @@ public class DB_Save {
 	      prStmt.setInt(6, skupina);
 
 	      prStmt.executeUpdate();
-	      System.out.println("Novy uzivatel byl vlozen do databaze!");
+	      System.out.println("Novy uzivatel s ID "+id+" byl vlozen do databaze!");
 	    } catch (SQLException e) {
-	      System.out.println("Uzivatel jix existuje.");
+	      System.out.println("Uzivatel s ID "+id+" jiz existuje.");
 	      // e.printStackTrace();
 	    } finally {
         	DB_Connection.OdpojeniOdDatabaze();
@@ -83,7 +83,7 @@ public class DB_Save {
 	    try {
 	      Statement stmt = conn.createStatement();
 	      stmt.execute(tabulkaOsob);
-	      System.out.println("Novy list osob studenta byl vlozen do databaze!");
+	      System.out.println("Novy list osob studenta s ID "+id+" byl vlozen do databaze!");
 	    } catch (SQLException e) {
 	      System.out.println("List osob studenta "+id+" jiz existuje");
 	      //e.printStackTrace();
@@ -102,7 +102,7 @@ public class DB_Save {
 	    try {
 	      Statement stmt = conn.createStatement();
 	      stmt.execute(tabulkaOsob);
-	      System.out.println("Novy list osob ucitele byl vlozen do databaze!");
+	      System.out.println("Novy list osob ucitele s ID "+id+" byl vlozen do databaze!");
 	    } catch (SQLException e) {
 	      System.out.println("List osob ucitele "+id+" jiz existuje");
 	      //e.printStackTrace();
@@ -161,7 +161,7 @@ public class DB_Save {
 	    try {
 	      Statement stmt = conn.createStatement();
 	      stmt.execute(tabulkaZnamek);
-	      System.out.println("Novy list znamek byl vlozen do databaze!");
+	      System.out.println("Novy list znamek pro studenta s ID "+id+" byl vlozen do databaze!");
 	    } catch (SQLException e) {
 	      System.out.println("List znamek uzivatele "+id+" jiz existuje");
 	      //e.printStackTrace();
@@ -178,8 +178,7 @@ public class DB_Save {
 	    try {
 	      PreparedStatement prStmt = conn.prepareStatement(insertList);
 	      for (int i = 0; i < listZnamek.size();i++) {
-	    	  prStmt.setInt(1, listZnamek.get(i));
-	    	  
+	    	  prStmt.setInt(1, listZnamek.get(i));  
 	    	  prStmt.executeUpdate();
 	      }
 	    } catch (SQLException e) {

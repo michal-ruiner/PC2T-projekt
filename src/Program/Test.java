@@ -103,7 +103,7 @@ public class Test {
 							 + "12) Nacteni udaju z databaze\n"
 							 + "13) Ulozeni udaju do databaze\n"
 							 + "14) Vymazani osoby z databaze\n"
-							 //+ "15)\n"
+							 + "15) Nacteni osoby z databaze\n"
 							 + "16) Ukonceni aplikace\n"
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"
@@ -327,6 +327,20 @@ public class Test {
 					      System.out.println("Zadejte ID uzivatele: ");
 						  id = pouzeCelaCisla(sc);
 						  databazeOsob.smazaniOsobyZDatabaze(id,nazevSouboru);
+					    } catch (FileNotFoundException e) {
+					      System.out.println("Doslo k chybe.");
+					      e.printStackTrace();
+					}
+					break;
+				case 15:
+					try {
+					      File soubor = new File("name.txt");
+					      Scanner cteniSouboru = new Scanner(soubor);
+					      String nazevSouboru = cteniSouboru.nextLine();
+					      cteniSouboru.close();
+					      System.out.println("Zadejte ID uzivatele: ");
+						  id = pouzeCelaCisla(sc);
+						  databazeOsob.nacteniOsoby(id,nazevSouboru);
 					    } catch (FileNotFoundException e) {
 					      System.out.println("Doslo k chybe.");
 					      e.printStackTrace();

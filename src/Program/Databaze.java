@@ -8,6 +8,7 @@ import java.util.Set;
 import SQLdb.DB_Connection;
 import SQLdb.DB_Delete;
 import SQLdb.DB_Load;
+import SQLdb.DB_LoadOsoba;
 import SQLdb.DB_Save;
 
 public class Databaze{
@@ -298,7 +299,6 @@ public class Databaze{
 	}
 	
 	public Databaze nacteniDatabaze(Databaze db, String nazevSouboru) {
-		//Osoba.setKeyID(1);
 		db=null;
 		db=DB_Load.nacteniUzivatelu(nazevSouboru);
 		return db;
@@ -306,6 +306,22 @@ public class Databaze{
 	
 	public void smazaniOsobyZDatabaze(int id, String nazevSouboru) {
 		DB_Delete.smazaniOsoby(id, nazevSouboru);
+	}
+	
+	public void nacteniOsoby(int id, String nazevSouboru) {
+		if(!databaze.containsKey(id)) {
+			int originalKeyID=Osoba.getKeyID();
+			Osoba tempOsoba = DB_LoadOsoba.nacteniOsoby(id, nazevSouboru);
+			if(tempOsoba != null) {
+				if(tempOsoba instanceof Student) {
+					Osoba.setKeyID(Osoba.getKeyID()-1);
+					setStudent(tempOsoba.getJmeno(), tempOsoba.getPrijmeni(), tempOsoba.getRok(), tempOsoba.vypisOsob());
+				}
+				databaze.put(Osoba.getKeyID()-1, tempOsoba);
+				Osoba.setKeyID(originalKeyID);
+			}
+		} else
+			System.out.println("Osoba "+id+" jiz existuje v databazi");
 	}
 	//************************************************
 	

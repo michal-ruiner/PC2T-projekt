@@ -14,7 +14,7 @@ public class DB_Load {
 	
 		public static Databaze nacteniUzivatelu(String nazevDatabaze) {
 		
-		String uzivatele = "SELECT id, jmeno, prijmeni, rok, `financni_ohodnoceni[CZK]`, skupina_id FROM uzivatele";
+		String uzivatele = "SELECT id, jmeno, prijmeni, rok, skupina_id FROM uzivatele";
 		Databaze databazeNew=new Databaze();
 		try {
 			Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
@@ -62,6 +62,21 @@ public class DB_Load {
 			return tempUcitele;
 		}
 		
+		public static List<Integer> studentiUcitele(int id, Connection conn) {
+			List<Integer> tempStudenti = new ArrayList<Integer>();
+			String dataStudenti = "SELECT id_studenta FROM Ucitel"+id;
+			try {
+				Statement stmt = conn.createStatement();
+				ResultSet studenti = stmt.executeQuery(dataStudenti);
+				while (studenti.next())
+					tempStudenti.add(studenti.getInt("id_studenta"));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return tempStudenti;
+		}
+		
 		public static List<Integer> znamkyStudenta(int id, Connection conn){
 			List<Integer> tempZnamky = new ArrayList<Integer>();
 			String znamkyStudenta = "SELECT znamka FROM ZnamkyStudenta"+id;
@@ -76,19 +91,4 @@ public class DB_Load {
 			}
 			return tempZnamky;
 		}
-		
-		/*public static List<Integer> studentiUcitele(int id, Connection conn) {
-			List<Integer> tempStudenti = new ArrayList<Integer>();
-        	String dataStudenti = "SELECT id_studenta FROM Ucitel"+id;
-			try {
-				Statement stmt = conn.createStatement();
-				ResultSet studenti = stmt.executeQuery(dataStudenti);
-				while (studenti.next())
-            		tempStudenti.add(studenti.getInt("id_studenta"));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return tempStudenti;
-		}*/
 }

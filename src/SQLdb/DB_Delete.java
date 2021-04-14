@@ -5,24 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB_Delete {
 
 	public static void smazaniOsoby(int id, String nazevSouboru) {
+		int exist = existenceUzivatele(id, nazevSouboru);
+		int skupina = urceniSkupinyUzivatele(id, nazevSouboru);
 		try {
 			Connection conn = DB_Connection.PripojeniKDatabazi(nazevSouboru);	
-			int exist = existenceUzivatele(id, nazevSouboru);
 			if(exist == 1) {
-				int skupina = urceniSkupinyUzivatele(id, nazevSouboru);
 				if(skupina == 1) {
 					System.out.println("Je to student");
 					smazaniOsobyZUzivatelu(id, conn);
 					smazaniListuOsob(id, "Student", conn);
 					smazaniListuZnamek(id, conn);
+					smazaniZListuUcitelu(id, conn);
 				} else {
 					System.out.println("Je to ucitel");
 					smazaniOsobyZUzivatelu(id, conn);
 					smazaniListuOsob(id, "Ucitel", conn);
+					smazaniZListuStudentu(id, conn);
 				}
 			} else {
 				System.out.println("Zadany uzivatel v DB neexistuje.");
@@ -93,4 +97,44 @@ public class DB_Delete {
 		      e.printStackTrace();
 		}
 	}
+	
+	public static void smazaniZListuUcitelu(int id, Connection conn) {
+		List<String> ucitele = new ArrayList<String>();
+		String listUcitelu = "SELECT name FROM sqlite_master WHERE name LIKE 'Ucitel%';";
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet data = stmt.executeQuery(listUcitelu);
+			while (data.next()) {;
+				ucitele.add(data.getString("name"));
+			}
+			for(int i=0; i<ucitele.size(); i++) {
+				String studentVListu = "DELETE FROM "+ucitele.get(i)+" WHERE id_studenta = "+id+";";
+				PreparedStatement prStmt = conn.prepareStatement(studentVListu);
+				prStmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+	}
+	
+	public static void smazaniZListuStudentu(int id, Connection conn) {
+		List<String> studenti = new ArrayList<String>();
+		String listStudentu = "SELECT name FROM sqlite_master WHERE name LIKE 'Student%';";
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet data = stmt.executeQuery(listStudentu);
+			while (data.next()) {;
+				studenti.add(data.getString("name"));
+			}
+			for(int i=0; i<studenti.size(); i++) {
+				String ucitelVListu = "DELETE FROM "+studenti.get(i)+" WHERE id_ucitele = "+id+";";
+				PreparedStatement prStmt = conn.prepareStatement(ucitelVListu);
+				prStmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+	}
+	
+	
 }

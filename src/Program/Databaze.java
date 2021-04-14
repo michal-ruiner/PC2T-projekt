@@ -298,7 +298,7 @@ public class Databaze{
 	}
 	
 	public Databaze nacteniDatabaze(Databaze db, String nazevSouboru) {
-		Osoba.setKeyID(1);
+		//Osoba.setKeyID(1);
 		db=null;
 		db=DB_Load.nacteniUzivatelu(nazevSouboru);
 		return db;

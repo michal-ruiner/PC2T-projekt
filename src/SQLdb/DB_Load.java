@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Program.Databaze;
+import Program.Osoba;
 
 public class DB_Load {
 	
@@ -21,14 +22,20 @@ public class DB_Load {
 			ResultSet data = stmt.executeQuery(uzivatele);
 			while (data.next()) {
                 if(data.getInt("skupina_id")==2) {
+                	Osoba.setKeyID(data.getInt("id"));
                 	databazeNew.setUcitel(data.getString("jmeno"), data.getString("prijmeni"), data.getInt("rok"));
                 } else {
-                	databazeNew.setStudent(data.getString("jmeno"), data.getString("prijmeni"), data.getInt("rok"), uciteleStudenta(data.getInt("id"), conn));
-                	if(DB_Exist.existujeTabulka("ZnamkyStudenta"+data.getInt("id"), conn)) {
-                		List<Integer> tempZnamky = new ArrayList<Integer>(znamkyStudenta(data.getInt("id"), conn));
-                		for(int i=0; i<tempZnamky.size();i++)
-                			databazeNew.zadaniZnamek(data.getInt("id"), tempZnamky.get(i));
-                	}
+                	Osoba.setKeyID(data.getInt("id"));
+                	List<Integer> listUcitelu = new ArrayList<Integer>(uciteleStudenta(data.getInt("id"), conn));
+                	if (!listUcitelu.isEmpty()) {
+                		databazeNew.setStudent(data.getString("jmeno"), data.getString("prijmeni"), data.getInt("rok"), listUcitelu);
+                		if(DB_Exist.existujeTabulka("ZnamkyStudenta"+data.getInt("id"), conn)) {
+                			List<Integer> tempZnamky = new ArrayList<Integer>(znamkyStudenta(data.getInt("id"), conn));
+                			for(int i=0; i<tempZnamky.size();i++)
+                				databazeNew.zadaniZnamek(data.getInt("id"), tempZnamky.get(i));
+                		}
+                	} else
+                		System.out.println("Student s ID "+data.getInt("id")+" nemohl byt nacten, protoze v databazi nema prirazene ucitele.");
                 }
             }
 			

@@ -73,6 +73,8 @@ public class Test {
 		List<Integer> listUcitelu2 = new ArrayList<Integer>();
 		listUcitelu1.add(3);
 		listUcitelu2.add(1);
+		listUcitelu1.add(2);
+		listUcitelu2.add(2);
 		//listUcitelu2.add(3);
 		databazeOsob.setStudent("studentb", "studentb", 2015, listUcitelu2);
 		databazeOsob.setStudent("studenta", "studenta", 2000, listUcitelu1);
@@ -105,7 +107,8 @@ public class Test {
 							 + "16) Ukonceni aplikace\n"
 							 + "*************Testovaci funkce*************\n"
 							 + "17) Vypis databaze\n"
-							 + "18) Vypis znamek");
+							 + "18) Vypis znamek\n"
+							 + "19) Smazani SQL databaze");
 			volba=pouzeCelaCisla(sc);
 			switch(volba) {
 				case 1:
@@ -322,8 +325,8 @@ public class Test {
 					      String nazevSouboru = cteniSouboru.nextLine();
 					      cteniSouboru.close();
 					      System.out.println("Zadejte ID uzivatele: ");
-							id = pouzeCelaCisla(sc);
-							databazeOsob.smazaniOsobyZDatabaze(id,nazevSouboru);
+						  id = pouzeCelaCisla(sc);
+						  databazeOsob.smazaniOsobyZDatabaze(id,nazevSouboru);
 					    } catch (FileNotFoundException e) {
 					      System.out.println("Doslo k chybe.");
 					      e.printStackTrace();
@@ -343,6 +346,20 @@ public class Test {
 						id=pouzeCelaCisla(sc);
 					}
 					databazeOsob.ziskaniZnamek(id);
+					break;
+				case 19:
+					try {
+					      File soubor = new File("name.txt");
+					      Scanner cteniSouboru = new Scanner(soubor);
+					      String nazevSouboru = cteniSouboru.nextLine();
+					      cteniSouboru.close();
+					      File databaze = new File("database\\"+nazevSouboru);
+					      if(databaze.exists())
+					    	  databaze.delete();
+					    } catch (FileNotFoundException e) {
+					      System.out.println("Doslo k chybe.");
+					      e.printStackTrace();
+					    }
 					break;
 			}
 		}

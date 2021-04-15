@@ -361,7 +361,7 @@ public class Databaze{
 					setUcitel(tempOsoba.getJmeno(), tempOsoba.getPrijmeni(), tempOsoba.getRok());
 					((Ucitel)databaze.get(tempOsoba.getID())).setPocetStudentuSeStipendiem(a);
 					for(int i=0; i<studenti.size(); i++)
-						((Ucitel)databaze.get(tempOsoba.getID())).setStudenti(studenti.get(i));
+						zadaniStudentu(tempOsoba.getID(), studenti.get(i));
 				}
 				Osoba.setKeyID(originalKeyID);
 			}

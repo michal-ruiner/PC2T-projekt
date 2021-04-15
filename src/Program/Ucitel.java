@@ -40,6 +40,10 @@ public class Ucitel extends Osoba implements Comparable<Ucitel>{
 		return (int)cistaMzda;
 	}
 	
+	public void setCistaMzda(float cistaMzda) {
+		this.cistaMzda = cistaMzda;
+	}
+	
 
 	public void setPocetStudentuSeStipendiem(int a) {
 		this.pocetStudentuSeStipendiem+=a;

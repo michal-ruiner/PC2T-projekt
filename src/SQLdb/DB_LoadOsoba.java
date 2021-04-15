@@ -22,9 +22,9 @@ public class DB_LoadOsoba {
 	           if(data.getInt("skupina_id")==2) {
 	            	Osoba.setKeyID(data.getInt("id"));
 	            	osoba = new Ucitel(data.getString("jmeno"), data.getString("prijmeni"), data.getInt("rok"));
-	            	List<Integer> studenti = new ArrayList<Integer>(DB_Load.studentiUcitele(id, conn));
+	            	/*List<Integer> studenti = new ArrayList<Integer>(DB_Load.studentiUcitele(id, conn));
 	            	for(int i=0; i<studenti.size(); i++)
-	            		((Ucitel)osoba).setStudenti(studenti.get(i));
+	            		((Ucitel)osoba).setStudenti(studenti.get(i));*/
 	           } else {
 	            	Osoba.setKeyID(data.getInt("id"));
 	                List<Integer> listUcitelu = new ArrayList<Integer>(DB_Load.uciteleStudenta(data.getInt("id"), conn));
@@ -44,7 +44,19 @@ public class DB_LoadOsoba {
         } finally {
         	DB_Connection.OdpojeniOdDatabaze();
         }
-		System.out.println(osoba);
+		//System.out.println(osoba);
 		return osoba;
+	}
+	
+	public static List<Integer> studentiUcitele(int id, String nazevDatabaze){
+		List<Integer> studenti;
+		try {
+			Connection conn = DB_Connection.PripojeniKDatabazi(nazevDatabaze);
+			studenti = new ArrayList<Integer>(DB_Load.studentiUcitele(id, conn));
+		} finally {
+        	DB_Connection.OdpojeniOdDatabaze();
+        }
+		System.out.println(studenti);
+		return studenti;
 	}
 }

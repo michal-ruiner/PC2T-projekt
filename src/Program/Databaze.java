@@ -122,7 +122,26 @@ public class Databaze{
 	public boolean smazaniOsoby(int id) {
 		if(databaze.containsKey(id)){
 			System.out.println("Uzivatel "+databaze.get(id).getPrijmeni()+" s ID "+id+" byl uspesne smazan.");
-			for (Integer i : databaze.keySet()) {
+			if(databaze.get(id) instanceof Student) {
+				for (Integer i : databaze.keySet()) {
+					if(databaze.get(i) instanceof Ucitel) {
+						if(((Ucitel)databaze.get(i)).vypisOsob().contains(id)) {
+							((Ucitel)databaze.get(i)).smazaniOsobZListu(id);
+							if(((Student)databaze.get(id)).getStipendium() > 0) {
+								((Ucitel)databaze.get(i)).setPocetStudentuSeStipendiem(-1);
+							}
+						}
+					}
+				}
+			} else {
+				for (Integer i : databaze.keySet()) {
+					if(databaze.get(i) instanceof Student) {
+						if(((Student)databaze.get(i)).vypisOsob().contains(id))
+							((Student)databaze.get(i)).smazaniOsobZListu(id);
+					}
+				}
+			}
+			/*for (Integer i : databaze.keySet()) {
 				if(databaze.get(i) instanceof Student) {
 					if(((Student)databaze.get(i)).vypisOsob().contains(id))
 						((Student)databaze.get(i)).smazaniOsobZListu(id);
@@ -130,7 +149,7 @@ public class Databaze{
 					if(((Ucitel)databaze.get(i)).vypisOsob().contains(id))
 						((Ucitel)databaze.get(i)).smazaniOsobZListu(id);
 				}
-			}
+			}*/
 			databaze.remove(id);
 			return true;
 		} else {
@@ -161,6 +180,9 @@ public class Databaze{
 		if(databaze.containsKey(iduc) && databaze.containsKey(idst) && databaze.get(iduc) instanceof Ucitel && databaze.get(idst) instanceof Student) {
 			if(((Ucitel)databaze.get(iduc)).vypisOsob().contains(idst)) {
 				((Ucitel)databaze.get(iduc)).smazaniOsobZListu(idst);
+				if(((Student)databaze.get(idst)).getStipendium() > 0) {
+					((Ucitel)databaze.get(iduc)).setPocetStudentuSeStipendiem(-1);
+				}
 				System.out.println("Smazani studenta uspesne provedeno.");
 			} else
 				System.out.println("Student se v seznamu ucitele nenachazi.");
@@ -313,11 +335,34 @@ public class Databaze{
 			int originalKeyID=Osoba.getKeyID();
 			Osoba tempOsoba = DB_LoadOsoba.nacteniOsoby(id, nazevSouboru);
 			if(tempOsoba != null) {
+				Osoba.setKeyID(Osoba.getKeyID()-1);
 				if(tempOsoba instanceof Student) {
-					Osoba.setKeyID(Osoba.getKeyID()-1);
+					for(int i=0; i<tempOsoba.vypisOsob().size();i++) {
+						if(!databaze.containsKey(tempOsoba.vypisOsob().get(i))) {
+							System.out.println("Studentovi nemohl byt prirazen ucitel "+tempOsoba.vypisOsob().get(i)+", protoze neexistuje v databazi.");
+							tempOsoba.vypisOsob().remove(i);
+						}
+					}
 					setStudent(tempOsoba.getJmeno(), tempOsoba.getPrijmeni(), tempOsoba.getRok(), tempOsoba.vypisOsob());
+				} else {
+					List<Integer> studenti = new ArrayList<Integer>(DB_LoadOsoba.studentiUcitele(tempOsoba.getID(), nazevSouboru));
+					int a = 0;
+	            	for(int i=0; i<studenti.size(); i++) {
+	            		if(!databaze.containsKey(studenti.get(i))) {
+							System.out.println("Uciteli nemohl byt prirazen student "+studenti.get(i)+", protoze neexistuje v databazi.");
+							studenti.remove(i);
+							continue;
+						}
+						if(((Student)databaze.get(studenti.get(i))).getStipendium() > 0) {
+							a++;
+						}
+	            	}
+	            	System.out.println(studenti);
+					setUcitel(tempOsoba.getJmeno(), tempOsoba.getPrijmeni(), tempOsoba.getRok());
+					((Ucitel)databaze.get(tempOsoba.getID())).setPocetStudentuSeStipendiem(a);
+					for(int i=0; i<studenti.size(); i++)
+						((Ucitel)databaze.get(tempOsoba.getID())).setStudenti(studenti.get(i));
 				}
-				databaze.put(Osoba.getKeyID()-1, tempOsoba);
 				Osoba.setKeyID(originalKeyID);
 			}
 		} else

@@ -266,9 +266,10 @@ public class Databaze{
 			}
 			Collections.sort(studenti);
 			for(Student asd: studenti)
-				System.out.println("ID: "+asd.getID()+", prumer studenta: "+asd.getPrumer());
+				System.out.printf("\nID: "+asd.getID()+", prumer studenta: %.2f",asd.getPrumer());
 		} else
 			System.out.println("Neco se pokazilo");
+		System.out.println();
 	}
 	
 	// Celkove financni prostredky na pokryti jednoho mesice

@@ -338,6 +338,7 @@ public class Databaze{
 			if(tempOsoba != null) {
 				Osoba.setKeyID(Osoba.getKeyID()-1);
 				if(tempOsoba instanceof Student) {
+					System.out.println(((Student)tempOsoba).getZnamkyList());
 					for(int i=0; i<tempOsoba.vypisOsob().size();i++) {
 						if(!databaze.containsKey(tempOsoba.vypisOsob().get(i))) {
 							System.out.println("Studentovi nemohl byt prirazen ucitel "+tempOsoba.vypisOsob().get(i)+", protoze neexistuje v databazi.");
@@ -345,6 +346,9 @@ public class Databaze{
 						}
 					}
 					setStudent(tempOsoba.getJmeno(), tempOsoba.getPrijmeni(), tempOsoba.getRok(), tempOsoba.vypisOsob());
+					for(int i=0; i<((Student)tempOsoba).getZnamkyList().size(); i++) {
+						zadaniZnamek(Osoba.getKeyID()-1,((Student)tempOsoba).getZnamkyList().get(i));
+					}
 				} else {
 					List<Integer> studenti = new ArrayList<Integer>(DB_LoadOsoba.studentiUcitele(tempOsoba.getID(), nazevSouboru));
 					int a = 0;

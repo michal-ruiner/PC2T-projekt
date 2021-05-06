@@ -34,6 +34,7 @@ public class DB_LoadOsoba {
 	                		List<Integer> tempZnamky = new ArrayList<Integer>(DB_Load.znamkyStudenta(data.getInt("id"), conn)); 
 	                		for(int i=0; i<tempZnamky.size(); i++) {
 	                			((Student)osoba).setZnamky(tempZnamky.get(i));
+	                			System.out.println(tempZnamky.get(i));
 	                		}
 	                	}
 	                } else

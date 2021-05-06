@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Test {
+public class Main {
 	
 	public static int pouzeCelaCisla(Scanner sc) { // Metoda pro overeni zadani celeho cisla
 		while(!sc.hasNextInt()) {
